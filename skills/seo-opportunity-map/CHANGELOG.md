@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.1 — 2026-09-15
+
+- Point the existing workflow at the preferred published catalog route after duplicate consolidation; preserve its method, budgets and verification dates.
+
 ## 3.0.0 — 2026-09-07
 
 - Combine market metrics, current search results and inspected page content into update/create/hold decisions.

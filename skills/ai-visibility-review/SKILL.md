@@ -48,7 +48,7 @@ Use actual customer questions or supplied search data when available.
 | `brightdata.chatgpt-search` | Optional collection comparison for the same ChatGPT panel |
 | `serper.google-search` | Current web context and locating relevant owned/source pages |
 | `brightdata.web-scrape` | Inspect the actual content behind a citation or recommendation |
-| `firecrawl.scrape` | Conditional fallback when main content is absent from extraction |
+| `firecrawl.web-scrape` | Conditional fallback when main content is absent from extraction |
 
 Discover by these intents and inspect each chosen tool. The two collection
 providers observe the same engine; report their results separately, including

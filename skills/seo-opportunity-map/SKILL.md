@@ -45,7 +45,7 @@ otherwise mark first-party traffic and conversion evidence unavailable.
 | Shortlisted demand and difficulty | `dataforseo.keyword-overview` | Comparable market metrics |
 | Current SERPs and ownership searches | `serper.google-search` | Current intent, page formats and rival URLs |
 | Selected target and rival pages | `brightdata.web-scrape` | Actual offer and page coverage |
-| Conditional extraction fallback | `firecrawl.scrape` | Recover main content when the first extraction is incomplete |
+| Conditional extraction fallback | `firecrawl.web-scrape` | Recover main content when the first extraction is incomplete |
 
 Select services for distinct evidence, not logo count. Two APIs reproducing the
 same source are not independent corroboration. Reuse suitable supplied evidence.
