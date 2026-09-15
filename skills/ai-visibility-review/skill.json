@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "ai-visibility-review",
   "title": "AI Visibility Review",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "status": "verified",
   "customer_proven": false,
   "summary": "Observe repeated ChatGPT answers and cited sources, then produce a defensible client report and specific page improvements to test.",
@@ -33,7 +33,7 @@
     {
       "id": "web-page-extraction",
       "tool_ids": [
-        "firecrawl.scrape"
+        "firecrawl.web-scrape"
       ]
     }
   ],
@@ -41,7 +41,14 @@
   "license": "MIT",
   "instruction_path": "SKILL.md",
   "dependencies": {
-    "scrollport_control_tools": ["search_tools", "inspect_tool", "run_tool", "get_run", "list_apps", "get_wallet"],
+    "scrollport_control_tools": [
+      "search_tools",
+      "inspect_tool",
+      "run_tool",
+      "get_run",
+      "list_apps",
+      "get_wallet"
+    ],
     "catalog_tools": [
       {
         "tool_id": "dataforseo.chatgpt-search",
@@ -64,7 +71,7 @@
         "purpose": "Verify the content underlying citations and recommendations."
       },
       {
-        "tool_id": "firecrawl.scrape",
+        "tool_id": "firecrawl.web-scrape",
         "required": false,
         "purpose": "Recover main content when the first extraction is incomplete; use only when needed and within budget."
       }
