@@ -22,8 +22,9 @@ discovery selects the relevant outcome Skill for each request.
 
 ## Inspect the proof before installing
 
-- [Latest Organic Opportunity Map verification](skills/seo-opportunity-map/evidence/2026-09-07-rehearsal.md): two existing-page improvements and one product-fit hold, with current intent and page checks.
-- [AI Visibility Review verification](skills/ai-visibility-review/evidence/2026-09-07-rehearsal.md): a complete nine-answer ChatGPT primary panel and reviewed source-backed recommendations; the optional second-collector comparison is partial.
+- [Latest Organic Opportunity Map verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): two existing-page updates and one hold for a software business, with current intent, ownership and page checks.
+- [Latest AI Visibility Review verification](skills/ai-visibility-review/evidence/2026-10-12-reverification.md): a complete nine-answer ChatGPT panel, separate branded and unbranded coding, and two inspected page actions.
+- [Latest Evidence-led Content Brief verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): a UK brief with an intent-led topic choice, a cited claim ledger and an outline mapped to sources.
 
 Earlier public synthetic examples remain available for context:
 

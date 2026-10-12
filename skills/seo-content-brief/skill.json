@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "seo-content-brief",
   "title": "Evidence-led Content Brief",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "status": "verified",
   "customer_proven": false,
   "summary": "Validate a content topic with current search-demand signals and cited public sources, then produce a writer-ready brief with a supported angle, outline and measurable acceptance criteria.",
@@ -60,7 +60,8 @@
     "A local file or conversation state for citations and the final brief"
   ],
   "evidence": {
-    "verified_at": "2026-08-27",
-    "review_due_at": "2026-09-27"
+    "verified_at": "2026-10-12",
+    "review_due_at": "2026-11-11",
+    "summary_path": "evidence/2026-10-12-reverification.md"
   }
 }

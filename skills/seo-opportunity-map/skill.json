@@ -125,8 +125,8 @@
     "A local file or conversation state for the checkpoint and final map"
   ],
   "evidence": {
-    "verified_at": "2026-09-07",
-    "review_due_at": "2026-10-07",
-    "summary_path": "evidence/2026-09-07-rehearsal.md"
+    "verified_at": "2026-10-12",
+    "review_due_at": "2026-11-11",
+    "summary_path": "evidence/2026-10-12-reverification.md"
   }
 }

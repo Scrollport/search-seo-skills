@@ -70,6 +70,11 @@ currently verified route is:
   context;
 - `exa.search` for current public evidence and source diversity.
 
+Keyword overview bills a base task plus a charge per keyword, so compute its
+maximum for the exact topic count from the inspected price and worked-example
+estimate, not the base price alone. Its SERP summary is opt-in: set
+`include_serp_info` to true when the inspected contract offers it.
+
 If either required tool is not live, its schema cannot express the bounded
 plan, or its current unit price cannot be mapped to a maximum, stop. Do not
 quietly replace structured search data with a general web result.
@@ -120,7 +125,8 @@ state.
 
 Run one approved `dataforseo.keyword-overview` batch. Preserve only fields the
 provider returned. For each topic record volume, difficulty, intent,
-competition and SERP features when present.
+competition and SERP features when present, with the SERP snapshot date; it can
+be older than the keyword metrics.
 
 Select a primary topic using business fit and search intent first, then demand
 and difficulty. A lower-volume, high-fit commercial topic can be a better

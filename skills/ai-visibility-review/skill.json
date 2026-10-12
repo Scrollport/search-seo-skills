@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "ai-visibility-review",
   "title": "AI Visibility Review",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "status": "verified",
   "customer_proven": false,
   "summary": "Observe repeated ChatGPT answers and cited sources, then produce a defensible client report and specific page improvements to test.",
@@ -14,8 +14,7 @@
     {
       "id": "ai-search-visibility",
       "tool_ids": [
-        "dataforseo.chatgpt-search",
-        "brightdata.chatgpt-search"
+        "dataforseo.chatgpt-search"
       ]
     },
     {
@@ -56,11 +55,6 @@
         "purpose": "Observe exact-prompt ChatGPT answers and sources."
       },
       {
-        "tool_id": "brightdata.chatgpt-search",
-        "required": false,
-        "purpose": "Compare a second collection route for the same ChatGPT panel."
-      },
-      {
         "tool_id": "serper.google-search",
         "required": true,
         "purpose": "Locate and contextualise source and owned pages."
@@ -91,9 +85,9 @@
   ],
   "cost": {
     "currency": "USD",
-    "model": "Fixed prompt repetitions on one collection route, optional route comparison and bounded source research.",
+    "model": "Fixed prompt repetitions on one collection route, a second route only when one is live, and bounded source research.",
     "trial_safe_max_usd": "0.200000",
-    "notes": "Re-inspect. At 7 September 2026 prices, three prompts repeated three times through DataForSEO cost $0.050400; a matching Bright Data panel raises collection cost to $0.069300 before sources and retries. Neither guarantees citations."
+    "notes": "Re-inspect. At 12 October 2026 prices, three prompts repeated three times through DataForSEO cost $0.050400 before sources and retries. Collection does not guarantee citations."
   },
   "approvals": [
     "Use existing authorisation for the business, market, bounded selection rules and total maximum; obtain missing approval before spending",
@@ -106,8 +100,8 @@
     "A local file or conversation state for the checkpoint and final map"
   ],
   "evidence": {
-    "verified_at": "2026-09-07",
-    "review_due_at": "2026-10-07",
-    "summary_path": "evidence/2026-09-07-rehearsal.md"
+    "verified_at": "2026-10-12",
+    "review_due_at": "2026-11-11",
+    "summary_path": "evidence/2026-10-12-reverification.md"
   }
 }

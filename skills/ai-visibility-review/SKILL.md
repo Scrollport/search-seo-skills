@@ -30,8 +30,10 @@ mentions. Ask only for missing choices that materially alter the report.
 Default to three questions representing discovery, comparison and a concrete
 buyer problem, each repeated three times through one chosen collection route.
 The caller's panel and action limits override defaults; preserve supplied panels.
-Add a second route when the question includes collection consistency or the
-user needs a comparison; make that choice before collection, not after results. Record
+Add a second route only when the question includes collection consistency or
+the user needs a comparison and discovery finds a live second ChatGPT collector;
+make that choice before collection, not after results. If none is live, say so
+and use one route. Record
 branded comparison prompts separately from unbranded discovery: a prompt that
 names the client is not an unbiased test of spontaneous brand visibility.
 
@@ -45,23 +47,21 @@ Use actual customer questions or supplied search data when available.
 | Tool | Contribution |
 | --- | --- |
 | `dataforseo.chatgpt-search` | Observed answer and sources for an exact prompt |
-| `brightdata.chatgpt-search` | Optional collection comparison for the same ChatGPT panel |
 | `serper.google-search` | Current web context and locating relevant owned/source pages |
 | `brightdata.web-scrape` | Inspect the actual content behind a citation or recommendation |
 | `firecrawl.web-scrape` | Conditional fallback when main content is absent from extraction |
 
-Discover by these intents and inspect each chosen tool. The two collection
-providers observe the same engine; report their results separately, including
-unknown model/session details. They do not provide independent engine coverage
-or guaranteed fresh independent sessions. Repeats may reuse cached or similar
+Discover by these intents and inspect each chosen tool. Any second collection
+route observes the same engine; report routes separately, including unknown
+model/session details. Routes do not provide independent engine coverage or
+guaranteed fresh independent sessions. Repeats may reuse cached or similar
 responses; retain timestamps and identical-output flags.
 
 Save exact call inputs, inspected price/unit, maximum and conditional source
-checks. At the 7 September 2026 inspection, nine DataForSEO observations cost
-$0.050400 before page research. Adding nine Bright Data observations makes
-$0.069300 in total. This is
-an illustration, not a permanent quote. Include retries and page checks in the
-actual maximum, and use decimal USD strings throughout.
+checks. At the 12 October 2026 inspection, nine DataForSEO observations cost
+$0.050400 before page research. This is an illustration, not a permanent
+quote. Include retries and page checks in the actual maximum, and use decimal
+USD strings throughout.
 
 Show the plan and use the user's existing scope/budget approval. Selecting
 sources inside the approved limits does not need repeated permission. Stop
