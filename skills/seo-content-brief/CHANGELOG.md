@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.1 — 2026-10-12
+
+- Request the keyword overview's opt-in SERP summary and record its snapshot
+  date, so the brief keeps the SERP context it promises.
+- Estimate the keyword overview from its per-keyword charge, not the base price
+  alone.
+- Reverify the same two-tool route with a public UK rehearsal using these
+  settings.
+
 ## 2.1.0 — 2026-08-31
 
 - Add context-first intake and discriminating activation phrases.
