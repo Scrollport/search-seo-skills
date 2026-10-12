@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Verified Search and SEO Skills powered by Scrollport.",
-    "version": "3.0.1"
+    "version": "4.1.0"
   },
   "plugins": [
     {
       "name": "search-seo-skills",
       "description": "Produce SEO page decisions, content briefs and observed ChatGPT visibility reports.",
-      "version": "4.0.0",
+      "version": "4.1.0",
       "source": "./"
     }
   ]
