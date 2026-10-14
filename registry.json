@@ -20,6 +20,12 @@
       "path": "skills/ai-visibility-review",
       "status": "verified",
       "customer_proven": false
+    },
+    {
+      "id": "rival-watch",
+      "path": "candidates/rival-watch",
+      "status": "draft",
+      "customer_proven": false
     }
   ]
 }

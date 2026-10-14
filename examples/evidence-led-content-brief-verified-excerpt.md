@@ -1,7 +1,10 @@
-# Evidence-led Content Brief — verified rehearsal excerpt
+# Article Brief + Draft — August 2026 rehearsal excerpt
 
-Status: abridged public synthetic example; verified 27 August 2026; not
-Customer-proven.
+Status: abridged public synthetic example; verified 27 August 2026 with an
+earlier version that produced a brief only, under a former name; not
+Customer-proven. Since version 4.0.0 it also expands the topic into real
+search phrases, reads today's results and one ChatGPT answer, and writes a
+first draft.
 
 ## Starting brief
 
