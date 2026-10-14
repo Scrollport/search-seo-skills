@@ -15,7 +15,7 @@ recovery boundary.
 | --- | --- | --- |
 | Compare a site with search competitors and choose what deserves work | [`seo-opportunity-map`](skills/seo-opportunity-map/SKILL.md) | Cited, prioritised opportunity map |
 | Turn a selected topic into a plan a writer can execute | [`seo-content-brief`](skills/seo-content-brief/SKILL.md) | Cited brief, claim ledger and outline |
-| Understand how ChatGPT describes a business for buyer questions | [`ai-visibility-review`](skills/ai-visibility-review/SKILL.md) | Repeated answer/citation baseline and specific page changes to test |
+| See how often ChatGPT recommends you when buyers ask, and who it names instead | [`ai-visibility-review`](skills/ai-visibility-review/SKILL.md) | ChatGPT Recommendation Check: a one-screen scorecard from 25 buyer answers, the pages ChatGPT used and three fixes to test |
 
 Install the complete package to make all three outcomes available. Native Skill
 discovery selects the relevant outcome Skill for each request.
@@ -23,7 +23,7 @@ discovery selects the relevant outcome Skill for each request.
 ## Inspect the proof before installing
 
 - [Latest Organic Opportunity Map verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): two existing-page updates and one hold for a software business, with current intent, ownership and page checks.
-- [Latest AI Visibility Review verification](skills/ai-visibility-review/evidence/2026-10-12-reverification.md): a complete nine-answer ChatGPT panel, separate branded and unbranded coding, and two inspected page actions.
+- [Latest ChatGPT Recommendation Check verification](skills/ai-visibility-review/evidence/2026-10-12-reverification.md): a complete nine-answer ChatGPT panel with separate branded and unbranded counts and two inspected page actions, run on the previous method (2.0.2); version 3.0.0 awaits its own verification run.
 - [Latest Evidence-led Content Brief verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): a UK brief with an intent-led topic choice, a cited claim ledger and an outline mapped to sources.
 
 Earlier public synthetic examples remain available for context:

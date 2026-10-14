@@ -2,13 +2,13 @@
   "$schema": "../../skill.schema.json",
   "schema_version": 2,
   "id": "ai-visibility-review",
-  "title": "AI Visibility Review",
-  "version": "2.0.2",
+  "title": "ChatGPT Recommendation Check",
+  "version": "3.0.0",
   "status": "verified",
   "customer_proven": false,
-  "summary": "Observe repeated ChatGPT answers and cited sources, then produce a defensible client report and specific page improvements to test.",
-  "outcome": "A fixed prompt panel, per-provider observation ledger, inspected citation evidence and prioritised page actions with a repeatable retest plan.",
-  "boundary": "ChatGPT only. No universal visibility score, causal attribution, guaranteed uplift, autonomous publication or customer-validation claim.",
+  "summary": "Ask ChatGPT the questions your buyers ask, count how often it recommends you and who it names instead, see which pages it relies on, and get three fixes to test.",
+  "outcome": "See how often ChatGPT recommends you when buyers ask, who it names instead, and three fixes to test, for about $0.20 a run.",
+  "boundary": "ChatGPT only: logged-out answers for one country and language. Google AI, Gemini, Claude and Perplexity are not checked. Results are counts from a small sample, never a rank or a single score; no fix is promised to work; nothing is published, changed on your site or sent to anyone.",
   "category": "search-seo",
   "capabilities": [
     {
@@ -52,52 +52,54 @@
       {
         "tool_id": "dataforseo.chatgpt-search",
         "required": true,
-        "purpose": "Observe exact-prompt ChatGPT answers and sources."
+        "purpose": "Ask ChatGPT each exact question, logged-out, with web search off for the counted answers and on for the source pass."
       },
       {
         "tool_id": "serper.google-search",
-        "required": true,
-        "purpose": "Locate and contextualise source and owned pages."
+        "required": false,
+        "purpose": "Find the business's own page that should answer a buyer question when it isn't linked from the home page."
       },
       {
         "tool_id": "brightdata.web-scrape",
         "required": true,
-        "purpose": "Verify the content underlying citations and recommendations."
+        "purpose": "Open the business's pages and the pages ChatGPT cites before building a fix on them."
       },
       {
         "tool_id": "firecrawl.web-scrape",
         "required": false,
-        "purpose": "Recover main content when the first extraction is incomplete; use only when needed and within budget."
+        "purpose": "Re-read a page once when the first read comes back empty or as navigation only."
       }
     ],
     "connected_apps": []
   },
   "inputs": [
-    "Brand, domain aliases, buyer task and market",
-    "Competitors and a fixed branded/unbranded prompt panel",
-    "Repeat count, source-research limits and total spend ceiling"
+    "Your website address",
+    "Your market: country and language",
+    "Five of eight buyer questions the agent drafts for you; none names your brand"
   ],
   "outputs": [
-    "Per-prompt and per-provider answer, mention, recommendation and citation ledger",
-    "Coverage, failure and variability disclosure with sample denominators",
-    "Inspected page/source recommendations and a repeatable retest plan",
-    "Research receipt with exact run ids and costs"
+    "A one-screen scorecard: how often ChatGPT mentions, recommends and cites you in 25 buyer answers, in plain English",
+    "Whether ChatGPT gets your facts right when asked about you by name (3 answers)",
+    "Who ChatGPT names instead and the pages it used, with counts and exact links",
+    "Three fixes to test this week: improve your own pages and get onto the pages ChatGPT cites for rivals",
+    "A retest date, with receipts and limits in a Details section at the end"
   ],
   "cost": {
     "currency": "USD",
-    "model": "Fixed prompt repetitions on one collection route, a second route only when one is live, and bounded source research.",
-    "trial_safe_max_usd": "0.200000",
-    "notes": "Re-inspect. At 12 October 2026 prices, three prompts repeated three times through DataForSEO cost $0.050400 before sources and retries. Collection does not guarantee citations."
+    "model": "33 ChatGPT answers and about 10 page checks, priced per call.",
+    "trial_safe_max_usd": "0.500000",
+    "notes": "Re-inspect before each run. At 14 October 2026 prices ($0.005600 an answer, $0.003300 a page check, $0.002500 a re-read or search) a check costs about $0.217800 and at most $0.260800 with spare answers, re-reads and searches; stop and ask above $0.50. A weekly re-check costs about $0.20."
   },
   "approvals": [
-    "Use existing authorisation for the business, market, bounded selection rules and total maximum; obtain missing approval before spending",
-    "Pause for a server confirmation request or a material scope or budget expansion",
-    "No publishing or website writes without explicit scope"
+    "Approve the market, the five ticked questions and the stated maximum before the first paid call",
+    "Pause for a server confirmation request, a higher maximum after re-inspection, or any change to the questions or market",
+    "A weekly re-check needs the user's yes for the same questions and maximum",
+    "No publishing, website changes or contact with third parties"
   ],
   "compatibility": [
     "Agent Skills compatible host",
     "One authorized Scrollport connection with apps, discover, inspect, run and wallet",
-    "A local file or conversation state for the checkpoint and final map"
+    "A local file or conversation state for the saved check and next week's comparison"
   ],
   "evidence": {
     "verified_at": "2026-10-12",

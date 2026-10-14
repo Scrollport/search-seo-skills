@@ -115,7 +115,7 @@ test("build output excludes candidates", () => {
   assert(!source.skills.filter((entry) => entry.status === "verified").some((entry) => entry.path.startsWith("candidates/")));
 });
 
-test("the three verified search outcomes are explicit in the registry", () => {
+test("the three verified search outcomes and the Rival Watch draft are explicit in the registry", () => {
   const source = JSON.parse(readFileSync(join(root, "registry.json"), "utf8"));
   assert.deepEqual(
     source.skills.map(({ id, status, customer_proven }) => ({ id, status, customer_proven })),
@@ -123,8 +123,30 @@ test("the three verified search outcomes are explicit in the registry", () => {
       { id: "seo-opportunity-map", status: "verified", customer_proven: false },
       { id: "seo-content-brief", status: "verified", customer_proven: false },
       { id: "ai-visibility-review", status: "verified", customer_proven: false },
+      { id: "rival-watch", status: "draft", customer_proven: false },
     ],
   );
+});
+
+test("Rival Watch stays a private draft candidate until a verification run promotes it", () => {
+  const dir = join(root, "candidates", "rival-watch");
+  const manifest = JSON.parse(readFileSync(join(dir, "skill.json"), "utf8"));
+  assert.equal(manifest.status, "draft");
+  assert.equal(manifest.instruction_path, "DRAFT.md");
+  assert.equal(manifest.evidence.verified_at, null);
+  assert.throws(() => readFileSync(join(dir, "SKILL.md")), /ENOENT/);
+});
+
+test("the ChatGPT check keeps its id, names the engines it skips and makes every repeat a new paid run", () => {
+  const dir = join(root, "skills", "ai-visibility-review");
+  const manifest = JSON.parse(readFileSync(join(dir, "skill.json"), "utf8"));
+  const instructions = readFileSync(join(dir, "SKILL.md"), "utf8");
+  assert.equal(manifest.id, "ai-visibility-review");
+  assert.equal(manifest.title, "ChatGPT Recommendation Check");
+  assert(instructions.includes("Not checked: Google AI, Gemini, Claude, Perplexity"));
+  assert(instructions.includes("--input @<file> --new"), "intentional repeats must start new paid runs");
+  assert(instructions.includes("without `--new`"), "a retry after a lost response must reuse the saved run");
+  assert(instructions.includes("force_web_search false"), "counted answers must not force web search");
 });
 
 test("renamed SEO Skills retain the former public ids as aliases", () => {
