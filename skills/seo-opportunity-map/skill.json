@@ -133,8 +133,8 @@
     "A local folder or conversation state for progress, the result and plan files"
   ],
   "evidence": {
-    "verified_at": "2026-10-12",
-    "review_due_at": "2026-11-11",
-    "summary_path": "evidence/2026-10-12-reverification.md"
+    "verified_at": "2026-10-14",
+    "review_due_at": "2026-11-13",
+    "summary_path": "evidence/2026-10-14-verification.md"
   }
 }
