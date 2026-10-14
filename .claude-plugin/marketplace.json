@@ -10,7 +10,7 @@
   "plugins": [
     {
       "name": "search-seo-skills",
-      "description": "Produce SEO page decisions, content briefs and observed ChatGPT visibility reports.",
+      "description": "Get your next SEO moves, article briefs with first drafts, and observed ChatGPT visibility reports.",
       "version": "4.1.0",
       "source": "./"
     }

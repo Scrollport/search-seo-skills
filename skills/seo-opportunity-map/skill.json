@@ -2,13 +2,13 @@
   "$schema": "../../skill.schema.json",
   "schema_version": 2,
   "id": "seo-opportunity-map",
-  "title": "Organic Opportunity Map",
-  "version": "4.0.1",
+  "title": "Next SEO Moves",
+  "version": "5.0.0",
   "status": "verified",
   "customer_proven": false,
-  "summary": "Turn search demand, current SERPs and inspected site content into prioritised decisions about which pages to improve or create.",
-  "outcome": "A sourced page-action queue with commercial fit, current page ownership, concrete edits, rejected topics and a complete research receipt.",
-  "boundary": "The Skill does not promise rankings, treat sampled keyword absence as proof of a gap, publish content, change a website or expand beyond the approved market and sample sizes.",
+  "summary": "For founders and small teams: it checks what your site and two rivals rank for, today's Google results and the pages involved, then lists the five SEO changes most worth your time.",
+  "outcome": "Your next five SEO moves: which page to fix or write, the exact edit, and why.",
+  "boundary": "Recommends only and never edits or publishes your site. Monthly searches rank the options; they are not a traffic forecast, and rankings are not promised. One market, sampled; technical SEO, indexing and backlinks are not checked.",
   "category": "search-seo",
   "capabilities": [
     {
@@ -32,6 +32,7 @@
     {
       "id": "web-search",
       "tool_ids": [
+        "dataforseo.google-serp-organic",
         "serper.google-search"
       ]
     },
@@ -60,69 +61,76 @@
       "inspect_tool",
       "run_tool",
       "get_run",
-      "list_apps",
       "get_wallet"
     ],
     "catalog_tools": [
       {
         "tool_id": "dataforseo.ranked-keywords",
         "required": true,
-        "purpose": "Sample the target and selected competitors' ranked keywords in one market."
+        "purpose": "Sample what the site and two rivals rank for in one market, 100 rows each."
       },
       {
         "tool_id": "dataforseo.organic-competitors",
         "required": false,
-        "purpose": "Find search competitors when the user has not supplied suitable domains."
+        "purpose": "Find two rivals when the user has not named them."
       },
       {
         "tool_id": "dataforseo.keyword-overview",
         "required": true,
-        "purpose": "Validate demand, difficulty, intent and SERP-feature signals for shortlisted topics."
+        "purpose": "Check monthly searches, difficulty, intent and results-page features, including AI Overviews, for up to 20 shortlisted phrases."
+      },
+      {
+        "tool_id": "dataforseo.google-serp-organic",
+        "required": true,
+        "purpose": "Read today's results page for each candidate move: who ranks, what kind of page wins and whether an AI Overview shows."
       },
       {
         "tool_id": "serper.google-search",
         "required": true,
-        "purpose": "Check current intent, result pages and target page ownership."
+        "purpose": "Check with a site: search that no existing page already covers a proposed new page; backup results page when a location code is unknown."
       },
       {
         "tool_id": "brightdata.web-scrape",
         "required": true,
-        "purpose": "Inspect the target and rival pages behind each recommendation."
+        "purpose": "Read the home page, the site's pages behind updates and the rival pages behind new pages."
       },
       {
         "tool_id": "firecrawl.web-scrape",
         "required": false,
-        "purpose": "Recover main content when the first extraction is incomplete; use only when needed and within budget."
+        "purpose": "Re-read a page whose main content came back empty; only when needed and within budget."
       }
     ],
     "connected_apps": []
   },
   "inputs": [
-    "One public target domain",
-    "One country and language",
-    "Business objective, audience and any excluded topics"
+    "Your website (required)",
+    "Country and language (default United States, English)",
+    "What you sell, to whom, and topics to avoid (optional; otherwise read from your home page)",
+    "Up to two rivals (optional; otherwise found automatically)",
+    "A Search Console export of your queries and pages (optional; uses your real positions, so the evidence goes from Medium to Strong)"
   ],
   "outputs": [
-    "Sampled target and competitor evidence",
-    "Prioritised update/create/hold page decisions with concrete edits and acceptance checks",
-    "Rejected topics and unresolved evidence",
-    "Claim-to-source ledger and complete research receipt"
+    "Five numbered moves: create or update which page, the exact edit, why (with the number behind it) and the effort",
+    "Which of those results pages show an AI Overview",
+    "A short list of topics held back, with reasons",
+    "A Brief this page plan for each new page, ready for Article Brief + Draft",
+    "Details: what was checked, sources, costs and limits"
   ],
   "cost": {
     "currency": "USD",
-    "model": "Bounded domain samples and keyword validation, current SERPs and selected page extraction.",
-    "trial_safe_max_usd": "0.500000",
-    "notes": "Plan from inspected prices including result charges and retries. Small default: three 100-row domain samples, ten validated topics, six searches and six pages; fewer outputs if evidence is insufficient."
+    "model": "Pay per call: three 100-row ranking samples, a 20-phrase overview, one live results page per move and a few page reads.",
+    "trial_safe_max_usd": "0.300000",
+    "notes": "Inspected 14 October 2026: ranking samples, rival finding and the overview cost $0.016800 per call plus $0.000200 per row or phrase; live results page $0.014000; site search $0.002500; page read $0.003300; backup read $0.002500. Default maximum $0.275800 ($0.255000 with named rivals); most runs spend less. Shown and approved before the first paid call, and re-inspected on every run."
   },
   "approvals": [
-    "Use existing authorisation for the business, market, bounded selection rules and total maximum; obtain missing approval before spending",
-    "Pause for a server confirmation request or a material scope or budget expansion",
-    "No publishing or website writes without explicit scope"
+    "Shows the maximum cost before the first paid call and waits for your yes",
+    "Asks again before anything bigger: more rivals, rows, pages or markets, or more than $0.30",
+    "Never edits or publishes anything on your site"
   ],
   "compatibility": [
     "Agent Skills compatible host",
-    "One authorized Scrollport connection with apps, discover, inspect, run and wallet",
-    "A local file or conversation state for the checkpoint and final map"
+    "One Scrollport connection (CLI, MCP or API) with search, inspect, run and wallet access",
+    "A local folder or conversation state for progress, the result and plan files"
   ],
   "evidence": {
     "verified_at": "2026-10-12",

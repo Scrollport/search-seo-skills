@@ -1,5 +1,39 @@
 # Changelog
 
+## 5.0.0 — 2026-10-14
+
+- Rename the Skill to Next SEO Moves (id unchanged) with the promise "Your next
+  five SEO moves: which page to fix or write, the exact edit, and why."
+- Open the result with five numbered moves (CREATE or UPDATE, page, exact edit,
+  why with the number behind it, effort), a short held list and an evidence
+  line. The nine-column table, sources, run ids, costs and limits move to a
+  Details appendix.
+- Ask for an optional Search Console export (queries and pages, up to 1,000
+  rows each, plus the AI features report when available) with a one-line
+  export instruction; without it the evidence is Medium.
+- Add a striking-distance step: the site's phrases at positions 4–15 become
+  UPDATE moves first.
+- Check one live results page per candidate with
+  `dataforseo.google-serp-organic`, mark AI Overviews and favour comparison,
+  pricing and use-case pages over top-of-funnel posts. `serper.google-search`
+  now confirms that no existing page covers a proposed new page.
+- Each CREATE move writes a small plan file and ends with "Brief this page",
+  handing its keyword, results page, rivals and page reads to Article Brief +
+  Draft so nothing is bought twice.
+- New defaults: one market, two auto-found rivals, three 100-row samples, a
+  20-phrase overview, six results pages (five moves plus one reserve), up to
+  six page reads and five moves. Maximum $0.275800 at 14 October 2026 prices
+  ($0.255000 with named rivals), approved before the first paid call; above
+  $0.30 needs a new approval.
+- With under 50 ranked phrases, say so and lead with the rivals' gap. Missing
+  volume reads "too small to measure", never 0, and volume ranks options rather
+  than forecasting traffic.
+- Retries reuse the original run: `get_run`, or the identical CLI command
+  without `--new` (MCP/HTTP: the same idempotency key). Drop the unused
+  `list_apps` control dependency.
+- The 12 October 2026 evidence verified version 4.0.1; this version awaits its
+  own paid verification run.
+
 ## 4.0.1 — 2026-09-15
 
 - Point the existing workflow at the preferred published catalog route after duplicate consolidation; preserve its method, budgets and verification dates.

@@ -1,21 +1,24 @@
 # ICP and jobs for Search and SEO Skills
 
-Status: maintainer decision record; updated 7 September 2026 for the authorized launch release.
+Status: maintainer decision record; updated 7 September 2026 for the authorized launch release, and 14 October 2026 to aim Next SEO Moves and Article Brief + Draft at founders and small teams.
 
 ## Primary customer
 
-The initial customer is a hands-on SEO agency operator or in-house SEO lead who:
+Since 14 October 2026 the primary customer is a founder or small team doing
+their own marketing, who:
 
-- repeatedly decides where organic effort should go and briefs people who
-  create or refresh pages;
-- can supply a public domain, one market, a business objective and exclusions;
+- decides every few weeks which pages to fix or write, and writes or edits
+  them without an SEO specialist;
+- can supply a website, one market and, ideally, a Search Console export;
 - already uses an AI agent or is willing to delegate a bounded research job;
-- values current evidence, a reviewable artifact and variable spend more than
-  an always-on dashboard; and
-- can trial one real, non-sensitive client or company question without
+- wants a result they can act on today, at a visible cost in cents, more than
+  an always-on dashboard or subscription; and
+- can trial one real, non-sensitive question about their own site without
   procurement.
 
-The package is not initially for teams buying continuous rank tracking,
+Hands-on SEO agency operators and in-house SEO leads can still use the
+package, but its defaults, wording and result formats are set for a
+non-specialist. The package is not for teams buying continuous rank tracking,
 enterprise crawling, automated publishing, backlink outreach or a complete SEO
 system of record.
 
@@ -23,17 +26,19 @@ system of record.
 
 | Rank | Customer job | Required artifact | Coverage | Evidence gate |
 | --- | --- | --- | --- | --- |
-| 1 | Decide where organic growth can come from | Prioritised page decisions with sources and completion checks | Verified: `seo-opportunity-map` | Latest internal rehearsal: two updates and one hold at $0.290400 |
+| 1 | Decide which pages to fix or write next | Five numbered moves with exact edits, reasons and effort, a held list and plan files for new pages | Verified: `seo-opportunity-map` (Next SEO Moves) | 12 October 2026 rehearsal of 4.0.1: two updates and one hold at $0.167300; 5.0.0 awaits its paid verification run |
 | 2 | Explain observed AI-search answers and what to improve | Fixed ChatGPT panel, citation evidence and page/source actions | Verified: `ai-visibility-review` | Primary panel 9/9; optional comparison 6/9; source checks and reviewed output at $0.069600 including both routes |
-| 3 | Turn a chosen opportunity into work a writer can execute | Brief with intent, angle, claims, sources, outline and acceptance criteria | Verified: `seo-content-brief` | Earlier synthetic rehearsal at $0.027200; available, not one of the three launch campaigns |
+| 3 | Write one article that can rank | Angle, headings with what each must prove and its source, questions to answer and a cited first draft | Verified: `seo-content-brief` (Article Brief + Draft) | 12 October 2026 rehearsal of 3.0.1 (brief only) at $0.027600; 4.0.0 awaits its paid verification run |
 | 4 | Cluster a keyword universe or conduct a technical page audit | Cluster map or technical diagnosis | Not separately packaged | Needs a distinct useful artifact and complete rehearsal |
 | 5 | Find link opportunities | Link-gap artifact | Deferred | Add only after direct demand and a repeatable decision output |
 
 ## Current bundle decision
 
 The package contains three independently installable outcome Skills and no
-router Skill. Organic opportunities and AI visibility are the current search
-campaign jobs; the content brief remains available as an existing outcome.
+router Skill. Next SEO Moves and AI visibility are the current search campaign
+jobs. Article Brief + Draft stays a separate outcome but chains from Next SEO
+Moves: a new-page move hands over a plan file, so the brief reuses its keyword,
+results page and page reads instead of buying them again.
 
 Do not add a broad SEO-audit Skill, a monolithic autonomous-SEO Skill or thin
 wrappers around individual API endpoints. A new function Skill must have:
@@ -47,11 +52,12 @@ wrappers around individual API endpoints. A new function Skill must have:
 
 ## Acquisition hypothesis
 
-- **Job promise:** defensible organic page priorities or a source-backed ChatGPT visibility diagnostic for a real buyer problem.
-- **Proof:** a finished opportunity map excerpt, exact observed provider spend,
+- **Job promise:** your next five SEO moves (which page to fix or write, the exact edit, and why), or a source-backed ChatGPT visibility diagnostic for a real buyer problem.
+- **Proof:** a finished Next SEO Moves result, exact observed provider spend,
   explicit uncertainty and no-ranking-guarantee boundary.
-- **Low-friction trial:** one target, one market, at most two selected
-  competitors and ten validated topics inside a $0.500000 inspected maximum; AI collection has its own bounded prompt plan.
+- **Low-friction trial:** one site, one market, two auto-found rivals and five
+  moves inside a $0.275800 maximum at 14 October 2026 prices; one brief and
+  draft inside $0.104200, plus an optional $0.126000 demand check; AI collection has its own bounded prompt plan.
 - **Qualification:** demonstrated unresolved customer pain precedes the offer; an internal example is not customer validation.
 
 The campaign may begin only after the public repository, Skill page and proof

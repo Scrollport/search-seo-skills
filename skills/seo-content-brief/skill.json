@@ -2,62 +2,107 @@
   "$schema": "../../skill.schema.json",
   "schema_version": 2,
   "id": "seo-content-brief",
-  "title": "Evidence-led Content Brief",
-  "version": "3.0.1",
+  "title": "Article Brief + Draft",
+  "version": "4.0.0",
   "status": "verified",
   "customer_proven": false,
-  "summary": "Validate a content topic with current search-demand signals and cited public sources, then produce a writer-ready brief with a supported angle, outline and measurable acceptance criteria.",
-  "outcome": "A writer-ready brief with one primary topic, audience and intent, a supported angle, source-backed claims, outline, exclusions and measurable acceptance criteria.",
-  "boundary": "The Skill does not write or publish the finished article, reproduce source text, invent statistics, present vendor claims as independent proof or expand research without approval.",
+  "summary": "For founders and small teams who write their own content: it finds the phrases people really search, reads today's Google results, one ChatGPT answer and 10 sources, then gives you a cited brief and a first draft to edit.",
+  "outcome": "Pick a winnable angle for one topic, then get a cited brief and a first draft to edit.",
+  "boundary": "Writes a brief and a first draft for you to edit; it never publishes, copies sources, invents statistics or examples, or promises rankings. Facts only you know stay as placeholders. One topic and one market per run.",
   "category": "search-seo",
   "capabilities": [
+    { "id": "seo-keyword-discovery", "tool_ids": ["dataforseo.keyword-ideas"] },
     { "id": "seo-keyword-analysis", "tool_ids": ["dataforseo.keyword-overview"] },
-    { "id": "web-search", "tool_ids": ["exa.search"] }
+    { "id": "keyword-demand-research", "tool_ids": ["dataforseo.google-ads-search-volume"] },
+    { "id": "web-search", "tool_ids": ["dataforseo.google-serp-organic", "serper.google-search", "exa.search"] },
+    { "id": "website-content-extraction", "tool_ids": ["brightdata.web-scrape"] },
+    { "id": "web-page-extraction", "tool_ids": ["firecrawl.web-scrape"] },
+    { "id": "ai-search-visibility", "tool_ids": ["dataforseo.chatgpt-search"] }
   ],
   "aliases": ["scrollport-evidence-led-content-brief", "evidence-led-content-brief", "content-brief"],
   "license": "MIT",
   "instruction_path": "SKILL.md",
   "dependencies": {
-    "scrollport_control_tools": ["search_tools", "inspect_tool", "run_tool", "get_run", "list_apps", "get_wallet"],
+    "scrollport_control_tools": ["search_tools", "inspect_tool", "run_tool", "get_run", "get_wallet"],
     "catalog_tools": [
+      {
+        "tool_id": "dataforseo.keyword-ideas",
+        "required": true,
+        "purpose": "Turn the topic into up to 50 phrases people really search before checking demand."
+      },
       {
         "tool_id": "dataforseo.keyword-overview",
         "required": true,
-        "purpose": "Validate demand, difficulty, intent and SERP context for a bounded topic set."
+        "purpose": "Check monthly searches, difficulty, intent and results-page features for up to 20 phrases."
+      },
+      {
+        "tool_id": "dataforseo.google-ads-search-volume",
+        "required": false,
+        "purpose": "One backup demand check, after a separate yes, when no phrase has volume."
+      },
+      {
+        "tool_id": "dataforseo.google-serp-organic",
+        "required": true,
+        "purpose": "Read today's top 10 results for the target and whether an AI Overview shows."
+      },
+      {
+        "tool_id": "serper.google-search",
+        "required": true,
+        "purpose": "Collect Google's related questions and related searches for the target; backup results page when a location code is unknown."
+      },
+      {
+        "tool_id": "brightdata.web-scrape",
+        "required": true,
+        "purpose": "Read the top three ranking pages."
+      },
+      {
+        "tool_id": "firecrawl.web-scrape",
+        "required": false,
+        "purpose": "Re-read a page whose main content came back empty; only when needed and within budget."
+      },
+      {
+        "tool_id": "dataforseo.chatgpt-search",
+        "required": true,
+        "purpose": "Record one ChatGPT answer to the reader's question and the sources it cites."
       },
       {
         "tool_id": "exa.search",
         "required": true,
-        "purpose": "Retrieve current public sources that substantiate the brief's claims and angle."
+        "purpose": "Find 10 current sources in two searches, including at least one primary source."
       }
     ],
     "connected_apps": []
   },
   "inputs": [
-    "A seed topic or business question",
-    "Audience, business objective and desired action",
-    "Country, language, exclusions and any required first-party sources"
+    "A topic or keyword, or a Brief this page plan from Next SEO Moves (required)",
+    "Your website, who the article is for and what they should do next (default: people who might buy from you; next step, try it or get in touch)",
+    "Country and language (default United States, English)",
+    "Your own data, examples, screenshots or opinions (optional; they make the angle yours)",
+    "Anything to avoid: claims, competitors or sources (default none)"
   ],
   "outputs": [
-    "Primary topic and supporting-topic evidence",
-    "Cited claim ledger with source roles and cautions",
-    "Writer-ready brief with angle, outline, exclusions and acceptance criteria",
-    "Reusable brief artifact and complete research receipt"
+    "The angle and target phrase, with monthly searches and what Google and ChatGPT show today",
+    "Headings with what each must prove and its source",
+    "Questions to answer and what only you can add",
+    "A first draft with inline citations, placeholders for your examples and a meta title, for you to edit",
+    "Details: up to 10 sources, costs and limits"
   ],
   "cost": {
     "currency": "USD",
-    "model": "Inspected keyword-batch and web-search prices for one bounded validation and evidence pass.",
-    "trial_safe_max_usd": "0.050000",
-    "notes": "Trial-safe mode validates at most five topics and retrieves at most five public sources in one search call; the exact inspected plan must remain at or below the stated maximum."
+    "model": "Pay per call: keyword ideas and an overview, one live results page with related questions, three page reads, one ChatGPT answer and two source searches. Drafting costs nothing extra.",
+    "trial_safe_max_usd": "0.150000",
+    "notes": "Inspected 14 October 2026: keyword ideas and the overview cost $0.016800 per call plus $0.000200 per idea or phrase; live results page $0.014000; source search $0.009800; ChatGPT answer $0.005600; page read $0.003300; related questions and backup read $0.002500. Default maximum $0.104200, less when a Next SEO Moves plan supplies the keyword and results page. A $0.126000 Google Ads demand check runs only if no phrase has volume and you say yes. Re-inspected on every run."
   },
   "approvals": [
-    "Approve the topic set, market, research query, requested result count, exact paid inputs and maximum total before the first metered run",
-    "Approve any second search, broader market, larger topic batch or additional provider"
+    "Shows the maximum cost before the first paid call and waits for your yes",
+    "Asks separately before the $0.126 backup demand check, which runs only when keyword data is empty",
+    "Writes the draft after you approve the brief, or straight away if you asked for it at the start",
+    "Never publishes anything"
   ],
   "compatibility": [
     "Agent Skills compatible host",
-    "One authorized Scrollport connection with apps, discover, inspect, run and wallet",
-    "A local file or conversation state for citations and the final brief"
+    "One Scrollport connection (CLI, MCP or API) with search, inspect, run and wallet access",
+    "A local folder or conversation state for progress, sources, the brief and the draft"
   ],
   "evidence": {
     "verified_at": "2026-10-12",

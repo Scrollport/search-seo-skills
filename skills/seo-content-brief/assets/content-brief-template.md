@@ -1,48 +1,111 @@
-# Evidence-led Content Brief
+# Brief: {working title} · {country} · Evidence: {Strong, Medium or Thin}
 
-## Brief
+Target: "{keyword}" {n}/mo, or "too small to measure, not zero" (+{n} related)
+Google shows: {the kind of page that wins}; AI Overview {shows, cites {domains}, or not shown}
+ChatGPT cites: {domains, or "no sources cited"}
+Angle: {what only you can claim, in one sentence}
+H2s: {heading} → proves {point} [{source number}]
+     {heading} → proves {point} [you]
+Answer: {question} · {question} · {question}
+Only you can add: {item} · {item}
+[Draft it now] · {n} sources, {n} publishers [▸](#details) · ≈${spent}
 
-- Working title:
-- One-sentence promise:
-- Audience and job:
-- Business objective:
-- Intended reader action:
-- Market and language:
-- Primary topic and intent rationale:
-- Supporting topics:
-- Differentiated angle:
-- Explicit exclusions:
+## Headings and what each must prove
 
-## Evidence and claim ledger
-
-| Claim or question | Source | Source role | Support | Caveat or counterpoint | Planned section |
-| --- | --- | --- | --- | --- | --- |
-
-## Outline
-
-| Section | Reader question answered | Evidence required | First-party input required |
+| # | Heading | Must prove | Source |
 | --- | --- | --- | --- |
+| 1 | {heading} | {the point this section has to establish} | [{n}] or [you] |
 
-## Production requirements
+No target word counts: a section is long enough when it proves its point.
 
-- Original examples or screenshots:
-- Internal links:
-- Call to action:
-- Claims requiring human expertise:
+## Questions to answer
 
-## Acceptance checklist
+- {question} ({Google or ChatGPT})
 
-- [ ] The primary topic has an explicit audience, market and intent rationale.
-- [ ] Every externally verifiable substantive claim has a usable citation.
-- [ ] Vendor perspectives and statistics are labelled or excluded.
-- [ ] The outline is specific enough to draft without repeating the research.
-- [ ] The finished piece has one intended reader action.
+## Only you can add
 
-## Research receipt
+- {your data, customer example, screenshot, price or opinion} → for heading {n}
 
-| Tool id | Run id | Input summary | Final cost |
-| --- | --- | --- | ---: |
+## Don't claim
 
-- Total spend:
-- Approved maximum:
-- Optional work skipped:
+- {claim} ({why: no source, vendor-only figure, or excluded by you})
+
+## Related phrases this article serves
+
+{phrase} ({n}/mo) · {phrase} (too small to measure)
+
+## Next step: Draft it now
+
+Say "Draft it now" for a first draft that follows these headings, or change the angle or headings first.
+
+---
+
+## First draft
+
+> First draft for you to edit. Check every fact and fill the [ADD …] placeholders before publishing.
+
+Meta title: {under 60 characters, including the target phrase}
+Meta description: {under 155 characters}
+
+# {H1}
+
+{Answer the reader's main question in the opening lines.} [1]
+
+## {H2 from the brief}
+
+{Section text in your own words, with inline citations.} [2] [ADD YOUR EXAMPLE: {what kind of example}]
+
+{Repeat for each heading; answer the questions list, for example as a short FAQ; end with the reader's next step.}
+
+### Sources
+
+1. {Publisher}, "{title}", {date}. {URL}
+
+After publishing, check Search Console in 28 days: impressions and average position for "{keyword}".
+
+## Details
+
+### Sources
+
+| # | Publisher | Title and link | Date | Kind | Supports |
+| --- | --- | --- | --- | --- | --- |
+| 1 | {publisher} | {title}, {URL} | {date} | {primary, expert, vendor or practitioner} | {the exact point} |
+
+At most 2 per publisher and at least 1 primary source.
+
+### Demand
+
+| Phrase | Monthly searches | Difficulty | Intent | Source and date |
+| --- | ---: | ---: | --- | --- |
+| {phrase} | {n, or too small to measure} | {n} | {intent} | {tool}, {date} |
+
+Monthly searches rank options; they are not a traffic forecast.
+
+### What ranks today ({date})
+
+| Position | Page | Kind of page | Covers well | Misses |
+| ---: | --- | --- | --- | --- |
+| 1 | {URL} | {how-to guide} | {…} | {…} |
+
+AI Overview: {shows or not shown}; {cited domains, if returned}.
+
+### ChatGPT answer ({date})
+
+{Two or three lines on what it said}; cited: {URLs, or "no sources cited"}; follow-up searches: {if listed}.
+
+### How sure this is
+
+{Evidence level and what, if anything, is missing.}
+
+### Costs and runs
+
+| Step | Tool | Run id | Input | Status | Cost (USD) |
+| --- | --- | --- | --- | --- | ---: |
+| {ideas} | {tool id} | {run id} | {short input} | {succeeded} | {0.026800} |
+
+Total ${spent} of ${approved} approved. Reused from a Next SEO Moves plan: {items, or none}.
+
+### Limits
+
+- One market; Google results and the ChatGPT answer seen on one day, and answers vary between runs.
+- {Pages not read, sources not found, and facts waiting for you.}

@@ -1,55 +1,59 @@
 # Search and SEO Skills
 
-Turn a client brief or website into defensible organic priorities and a
-writer-ready content plan without assembling separate SEO data subscriptions.
+Know which pages to fix or write next, then get each new page briefed and
+drafted, without paying for separate SEO tools.
 
-This package is for hands-on SEO agency operators and in-house SEO teams that
-need decision-ready evidence from an agent, not another dashboard or generic
-SEO prompt library. Scrollport supplies current metered tools through one
-connection and wallet; each Skill controls its own evidence, cost, approval and
-recovery boundary.
+This package is for founders and small teams who do their own marketing with an
+AI agent. Scrollport supplies live search data through one connection and one
+prepaid wallet; each Skill shows its maximum cost and waits for your yes before
+it spends anything.
 
 ## Start with the outcome
 
-| If you need to... | Use | Finished artifact |
+| If you need to... | Use | What you get |
 | --- | --- | --- |
-| Compare a site with search competitors and choose what deserves work | [`seo-opportunity-map`](skills/seo-opportunity-map/SKILL.md) | Cited, prioritised opportunity map |
-| Turn a selected topic into a plan a writer can execute | [`seo-content-brief`](skills/seo-content-brief/SKILL.md) | Cited brief, claim ledger and outline |
+| Decide which pages to fix or write next | [Next SEO Moves](skills/seo-opportunity-map/SKILL.md) (`seo-opportunity-map`) | Your next five SEO moves: which page to fix or write, the exact edit, and why |
+| Write one article that can rank | [Article Brief + Draft](skills/seo-content-brief/SKILL.md) (`seo-content-brief`) | A winnable angle for one topic, a cited brief and a first draft to edit |
 | Understand how ChatGPT describes a business for buyer questions | [`ai-visibility-review`](skills/ai-visibility-review/SKILL.md) | Repeated answer/citation baseline and specific page changes to test |
+
+The first two work together: every new page in Next SEO Moves ends with "Brief
+this page", which hands its keyword, results page and rivals to Article Brief +
+Draft, so nothing is bought twice.
 
 Install the complete package to make all three outcomes available. Native Skill
 discovery selects the relevant outcome Skill for each request.
 
 ## Inspect the proof before installing
 
-- [Latest Organic Opportunity Map verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): two existing-page updates and one hold for a software business, with current intent, ownership and page checks.
+- [Latest Next SEO Moves verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): run on version 4.0.1, then called Organic Opportunity Map. Two existing-page updates and one hold for a software business, each checked against live results and the pages involved. Version 5.0.0 changes the result format and adds checks; its own verification run is pending.
 - [Latest AI Visibility Review verification](skills/ai-visibility-review/evidence/2026-10-12-reverification.md): a complete nine-answer ChatGPT panel, separate branded and unbranded coding, and two inspected page actions.
-- [Latest Evidence-led Content Brief verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): a UK brief with an intent-led topic choice, a cited claim ledger and an outline mapped to sources.
+- [Latest Article Brief + Draft verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): run on version 3.0.1, which produced a brief only. A UK brief whose topic was chosen for reader fit over volume, with every claim tied to a source and an outline mapped to those sources. Version 4.0.0 adds phrase expansion, today's results, a ChatGPT check and the first draft; its own verification run is pending.
 
-Earlier public synthetic examples remain available for context:
+Earlier public synthetic examples from August 2026 remain available for
+context. They show the older result formats:
 
-- [Organic Opportunity Map verified excerpt](examples/organic-opportunity-map-verified-excerpt.md)
-  shows the accepted decision, evidence labels, cost and sampling limitation
-  from the public synthetic rehearsal.
-- [Evidence-led Content Brief verified excerpt](examples/evidence-led-content-brief-verified-excerpt.md)
-  shows the accepted topic choice, source roles, outline shape and cost from the
-  public synthetic rehearsal.
+- [Next SEO Moves, August 2026 excerpt](examples/organic-opportunity-map-verified-excerpt.md)
+  shows the accepted decision, evidence labels, cost and sampling limit from
+  the public synthetic rehearsal.
+- [Article Brief + Draft, August 2026 excerpt](examples/evidence-led-content-brief-verified-excerpt.md)
+  shows the accepted topic choice, source roles, outline shape and cost from
+  the public synthetic rehearsal.
 
 These examples prove bounded execution on public synthetic inputs. They do not
 claim customer demand, rankings or Customer-proven status.
 
 ## Why this package is different
 
-- **A finished decision artifact:** every Skill defines the deliverable and the
-  semantic checks that make it useful.
-- **Current evidence with provenance:** provider facts, public sources, sampled
-  absence and agent judgement remain visibly separate.
-- **Bounded spend:** every paid input and maximum is inspected before use; the
-  verified starter routes fit inside the first-agent trial credit.
-- **Safe recovery:** agents checkpoint run ids and reuse successful results
-  rather than repeating paid calls after a lost wait loop.
-- **Honest scope:** no autonomous-SEO claim, ranking forecast, exhaustive audit,
-  publication or continuous monitoring is implied.
+- **The answer first:** each result opens with what to do next; sources, costs
+  and limits sit in a Details section at the end.
+- **Live data you can check:** every number says where and when it was seen,
+  and a missing number reads "too small to measure", never 0.
+- **Cost approved up front:** each Skill works out its maximum from today's
+  prices and waits for your yes; default runs cost cents.
+- **No double charges:** a retry reads or reuses the original run instead of
+  paying again.
+- **Honest scope:** no ranking or traffic promises, full audits, publishing or
+  continuous monitoring.
 
 ## Install
 
