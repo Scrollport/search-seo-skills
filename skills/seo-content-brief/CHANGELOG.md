@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.1 — 2026-10-14
+
+- Clarify step 7: when the site already has several pages on the topic,
+  update the one closest to the reader and link the others to it.
+- Method, tools and maximum are unchanged; the 14 October 2026 verification of
+  4.1.0 carries forward.
+
 ## 4.1.0 — 2026-10-14
 
 Fixes from the first paid verification of 4.0.0 ("round robin scheduling"

@@ -1,5 +1,16 @@
 # Changelog
 
+## 5.1.1 — 2026-10-14
+
+From the second paid verification of 5.1.0 on cal.com, which passed every
+check except that no new-page move survived, so the plan file and the Brief
+this page hand-off went untested:
+
+- Write a plan file for every CREATE candidate that passes its site search,
+  including held ones; a held one shows [Brief this page] in the Held line.
+- Keep a CREATE that passed its site search in the five unless today's results
+  page shows a different page type wins.
+
 ## 5.1.0 — 2026-10-14
 
 Fixes from the first paid verification of 5.0.0 (cal.com, United States:

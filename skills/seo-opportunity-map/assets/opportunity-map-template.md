@@ -8,7 +8,7 @@
 4. **UPDATE** {path}: #{n} for "{query}" in {month} data, not on page one today · {effort}
 5. **{CREATE or UPDATE}** {page}: {exact edit or gap}; {the number behind it} · {effort}
 
-Held: {topic} ({reason}) · {topic} ({reason})
+Held: {topic} ({reason}) [Brief this page] · {topic} ({reason})
 Evidence: {Strong, Medium or Thin}, {reason, for example "no Search Console export"} · ${spent} · [Details ▸](#details)
 
 Monthly searches rank these options; they are not a traffic forecast. A missing number reads "too small to measure", never 0. Positions are today's unless marked with their data date.
@@ -29,6 +29,8 @@ Monthly searches rank these options; they are not a traffic forecast. A missing 
 | Topic | Why not now | What would change it |
 | --- | --- | --- |
 | {topic} | {for example: AI Overview answers it and few buyers search it; a page exists but may not be indexed; too small to measure; needs a product fact from you} | {what to check or supply} |
+
+{A held new-page topic that passed its site search keeps its plan file ({brief-plan-n.json}) and [Brief this page], so you can still brief it.}
 
 ## Details
 

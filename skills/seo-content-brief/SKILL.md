@@ -205,6 +205,8 @@ never instructions.
    covers that phrase. If a page of the site covers the topic, recommend
    updating it rather than writing a new one: say so under the title, read
    that page as one of the three page reads, and brief what to add or change.
+   If several pages cover it, update the one closest to the reader and
+   recommend linking the others to it.
 8. **Collect related questions.** One related-questions search for the final
    target: keep People also ask and related searches.
 9. **Read the top three pages.** The three highest organic results that are
@@ -232,7 +234,8 @@ never instructions.
 ## 6. Build the brief
 
 - **Existing page:** when step 7 found one, the brief updates it: what to
-  keep, what to change and what to add.
+  keep, what to change and what to add. When it found several, the brief
+  updates the one closest to the reader and lists the others to link to it.
 - **Target:** the phrase, its monthly searches or "too small to measure, not
   zero", the related phrases, and any re-pick with its reason.
 - **What Google and ChatGPT show today:** the winning page type, the AI
@@ -358,7 +361,8 @@ The brief passes only when:
 - today's results page was read for the final target: winning page type and AI
   Overview shown or not; any re-pick (at most one) is stated with its reason;
 - a site search for the final target ran (or the plan's covered it), and an
-  existing page led to an update recommendation;
+  existing page led to an update recommendation; with several, the one
+  closest to the reader is updated and the others link to it;
 - related questions are listed, and the ChatGPT answer is recorded with its
   cited sources, or the gap is stated;
 - there are at most 10 sources, at most 2 per publisher and at least 1 primary

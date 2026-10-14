@@ -189,7 +189,7 @@ test("Next SEO Moves and Article Brief + Draft lead with the result in plain wor
   }
 });
 
-test("fixes from the first paid verification stay in place", () => {
+test("fixes from the paid verification runs stay in place", () => {
   const moves = readFileSync(join(root, "skills", "seo-opportunity-map", "SKILL.md"), "utf8").replace(/\s+/g, " ");
   const movesResult = readFileSync(join(root, "skills", "seo-opportunity-map", "assets", "opportunity-map-template.md"), "utf8");
   const brief = readFileSync(join(root, "skills", "seo-content-brief", "SKILL.md"), "utf8").replace(/\s+/g, " ");
@@ -202,6 +202,10 @@ test("fixes from the first paid verification stay in place", () => {
   assert(!brief.includes("search_volume,desc") && brief.includes("key terms"), "keyword ideas are not sorted by volume and keep the seed's key terms");
   assert(brief.includes("Check for a page you already have"), "the brief checks for an existing page before briefing");
   assert(brief.includes("Re-pick only once"), "the target can be re-picked once after reading the results page");
+  assert(moves.includes("whether it is one of the five or held") && moves.includes("[Brief this page] after its reason in the Held line"), "held new-page topics keep their plan file and hand-off");
+  assert(moves.includes("drop that CREATE only when today's results page shows a different page type wins"), "a new page stays in the five unless another page type wins");
+  assert(movesResult.includes("Held: {topic} ({reason}) [Brief this page]"), "the result template shows the hand-off on held new pages");
+  assert(brief.includes("update the one closest to the reader and recommend linking the others to it"), "with several existing pages, the brief updates the closest and links the rest");
 });
 
 // A due date remains current through the end of that UTC day.
