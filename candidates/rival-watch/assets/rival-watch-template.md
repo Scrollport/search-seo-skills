@@ -34,8 +34,8 @@ quote]" ([link]).
 | Keyword | You | [Rival A] | [Rival B] | [Rival C] | Material move |
 | --- | ---: | ---: | ---: | ---: | --- |
 
-Positions are one Google sample from [country], top 20 only. Moves of 1–2
-places are normal.
+Positions are one Google sample from [country], top 10 only; "—" means not in
+the top 10. Moves of 1–2 places are normal.
 
 ## Quiet this week
 
@@ -79,6 +79,9 @@ Total $[spent] of the approved $[maximum].
 
 ### Limits
 
-Public sources only. Rankings are one Google sample per keyword. Prices can
-differ by visitor country. DataForSEO's counts change only when it refreshes
-its data. Ads cover Meta only. Anything marked "not checked" was not assessed.
+Public sources only. Rankings are one Google sample per keyword, top 10 only.
+Prices can differ by visitor country. Page lists leave out pages users create,
+and a list built a different way from last week's isn't compared. DataForSEO's
+counts change only when it refreshes its data. Ads cover Meta only, newest 30
+per rival ("at least 30" when the page is full). Anything marked "not checked"
+was not assessed.

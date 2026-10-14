@@ -9,7 +9,8 @@ metadata:
 # ChatGPT Recommendation Check
 
 See how often ChatGPT recommends you when buyers ask, who it names instead, and
-three fixes to test, for about $0.20 a run in 5–15 minutes.
+three fixes to test, for about $0.20 a run. A check takes about 20–30 minutes;
+the user can leave it running.
 
 Ask ChatGPT the questions buyers ask before they know the brand, count what
 comes back, open the pages ChatGPT leans on, and turn that into three fixes.
@@ -46,8 +47,10 @@ Ask for two things only:
 Work out the rest yourself and confirm it in one short message:
 
 - **Names and domains to count**: the brand, its products and any other
-  official domains. Note a name that is also an ordinary word, so the word is
-  not counted as the brand.
+  official domains. Every subdomain of those domains counts as the brand's
+  site, including blog, docs and help subdomains and copies of its pages served
+  on a subdomain. Note a name that is also an ordinary word, so the word is not
+  counted as the brand.
 - **What the site sells, to whom and for how much**, from its home and pricing
   pages. The user's own description is enough if they gave one. If your host
   can't read a public page for free, these two pages become the first two page
@@ -80,10 +83,13 @@ read its input fields and price.
 
 The ChatGPT tool's web-search switch is on by default, so always set it: off
 for the buyer and by-name answers (ChatGPT decides whether to search, as it
-does for a logged-out buyer) and on only for the source pass. If no live tool
-asks ChatGPT an exact question, stop and say so; a database of past AI mentions
-does not ask the buyer's question and is no substitute. If the market isn't
-supported, say so and offer the nearest one that is; never switch silently.
+does for a logged-out buyer) and on only for the source pass. Left to itself,
+ChatGPT still searched the web in 25 of 25 buyer answers in the 14 October 2026
+verification, so expect cited pages, and report the share every time because
+it can change. If no live tool asks ChatGPT an exact question, stop and say so;
+a database of past AI mentions does not ask the buyer's question and is no
+substitute. If the market isn't supported, say so and offer the nearest one
+that is; never switch silently.
 
 ## 3. Price and approval
 
@@ -99,21 +105,24 @@ most. If the maximum ever exceeds $0.500000, stop and ask.
 
 Before the first paid call, check `get_wallet` (available must cover the
 maximum) and ask once, plainly: "This asks ChatGPT 33 times and opens about 10
-pages: about $0.22, never more than $0.27, 5–15 minutes. Go?" Choosing pages
-within that maximum needs no further approval. Ask again before going on after
-a `confirmation_required` response (give the user its approval link and
-estimate, then wait), a price that raises the maximum, or any change to the
-questions or market.
+pages: about $0.22, never more than $0.27. It takes about 20–30 minutes, and
+you can leave it running. Go?" Choosing pages within that maximum needs no
+further approval. Ask again before going on after a `confirmation_required`
+response (give the user its approval link and estimate, then wait), a price
+that raises the maximum, or any change to the questions or market.
 
 ## 4. Ask ChatGPT
 
 1. **Five rounds.** In each round ask each ticked question once with web search
-   off, and add the by-name question in rounds 1, 3 and 5. Run calls one after
-   another, never in parallel, so the five answers to a question come a few
-   minutes apart.
-2. **Source pass.** Then ask each ticked question once more with web search on.
-   It shows which pages ChatGPT reads when it searches; report it separately and
-   never add it to the 25.
+   off, and add the by-name question in rounds 1, 3 and 5. Finish a round before
+   starting the next, so the answers to one question come minutes apart. If
+   your host can run calls at the same time, run up to 5 answers of a round at
+   once, each a separate run with `--new`, but never two answers to the same
+   question at once. Answers took 18–64 seconds each in testing, so one call at
+   a time the check takes about 20–30 minutes.
+2. **Source pass.** Then ask each ticked question once more with web search on,
+   up to 5 at once in the same way. It shows which pages ChatGPT reads when made
+   to search; report it separately and never add it to the 25.
 
 One input file per call, for example:
 
@@ -129,11 +138,12 @@ charges:
   as `idempotency_key`. Asking one question five times is five intentional
   runs: without `--new` (or a fresh key) identical calls collapse into one run
   and the sample silently shrinks.
-- After a lost response or a timeout, do not start a new run. If you have the
-  run id, read it with `get_run <run_id>` (free). If no run id came back, rerun
-  the identical command without `--new` (MCP or HTTP: the same key), so
-  Scrollport returns the original run instead of charging again. The CLI prints
-  the run id as soon as a run is accepted; keep that output.
+- Allow each call at least 2 minutes. After a lost response or a timeout, do
+  not start a new run. If you have the run id, read it with `get_run <run_id>`
+  (free). If no run id came back, rerun the identical command without `--new`
+  (MCP or HTTP: the same key), so Scrollport returns the original run instead
+  of charging again. The CLI prints the run id as soon as a run is accepted;
+  keep that output.
 - Never start a replacement while a saved run is `queued` or `running`; read it
   again with `get_run`.
 - Check that every answer has its own run id and a time from this check. A
@@ -175,22 +185,36 @@ a placeholder is unusable; replace it once with `--new` within the maximum. A
 usable answer that cites no pages is still usable. If two answers to the same
 question are word for word identical, count them once.
 
-For each usable buyer answer record:
+Count every brand, the user's and each rival, the same way: once per usable
+buyer answer, out of the same n (the usable buyer answers in the headline).
+Merge spellings and product names of one product (GA4 and Google Analytics 4).
+A brand named only in the question doesn't count, nor does a parent company or
+the same word used in its ordinary sense. Use the tool's brand list when it
+returns one, but confirm each brand in the answer text.
 
-- **Mentioned**: the brand or one of its products is named in the answer. The
-  question doesn't count, nor does a parent company or the same word used in
-  its ordinary sense.
-- **Recommended**: offered as a good choice for what the buyer asked (a top
-  pick, on the shortlist, "you could use it"). Named in passing, as unsuitable
-  or negatively counts as mentioned, not recommended.
-- **Your site cited**: a page on the brand's domains is in the answer's sources.
-- **Named instead**: every other brand offered as an option, once per answer.
-  Use the tool's brand list when it returns one, but confirm it in the text.
+- **Named in**: the answer names the brand anywhere. For the user's brand this
+  is "mentioned".
+- **Recommended in**: the answer offers the brand as a good choice for what
+  the buyer asked (a top pick, on the shortlist, "you could use it"). Named in
+  passing, as unsuitable or negatively doesn't count. It is never more than
+  named in.
+- **Listed first in**: the brand is the first option the answer recommends.
+- **Named instead**: on the scorecard, the three other brands with the highest
+  recommended-in counts (ties go to named in), each shown as recommended in
+  x/n. Brands named but never recommended appear only in the table.
+
+For each usable buyer answer also record:
+
+- **Your site cited**: a page on the brand's domains or any of their
+  subdomains is in the answer's sources. ChatGPT sometimes cites copies of the
+  brand's pages on subdomains, so check the host, not only the main domain.
+- **Searched**: ChatGPT searched the web for this answer (the tool returned
+  cited sources, search results or the searches it ran).
 - **Pages used**: each cited URL with tracking parameters such as utm_source
   removed, counted once per answer.
 - **Model**: the model field, when the tool reports one.
 
-Keep a short quote behind each "recommended" and each "named instead".
+Keep a short quote behind each "recommended" and each "listed first".
 
 For the by-name answers record **accurate** (no wrong fact about what the
 business sells, who it's for, its price or plans, checked against its own
@@ -237,18 +261,21 @@ Open up to 10 pages, most useful first:
 1. The brand's home and pricing pages, for the facts behind the by-name check
    (skip any already read for the inputs).
 2. Pages cited in 3 or more buyer answers that name rivals: is the brand there,
-   and what would it take to be added (a list's author, a review profile, an
-   open thread)?
+   what would it take to be added (a list's author, a review profile, an open
+   thread), and does the page say anything wrong about the brand?
 3. A rival's own cited page, such as a comparison or alternatives page: what
-   makes it easy to quote (a table, prices, who it's for)?
+   makes it easy to quote (a table, prices, who it's for), and what does it say
+   about the brand? Rival pages often carry wrong or out-of-date facts about
+   competitors.
 4. The brand's page that should answer the buyer's question (comparison,
    alternatives or the closest feature page). If it isn't linked from the home
    page, one search finds it.
 
-If a page comes back empty or as navigation only, re-read it once with the
-fallback tool. If that fails too, mark it "couldn't open, check it yourself"
-and build no fix on what it might say. Read what a cited page actually says: a
-citation is not an endorsement.
+Quote every wrong fact a cited page states about the brand next to the correct
+fact and the brand's own page that shows it. If a page comes back empty or as
+navigation only, re-read it once with the fallback tool. If that fails too,
+mark it "couldn't open, check it yourself" and build no fix on what it might
+say. Read what a cited page actually says: a citation is not an endorsement.
 
 ## 9. Three fixes on two tracks
 
@@ -260,10 +287,13 @@ reason, when it doesn't. Use both tracks when you can:
   buyers asked about, written as text rather than images); state price and
   audience plainly where ChatGPT got them wrong; make a page ChatGPT already
   cites answer the buyer's question directly.
-- **Get onto the pages ChatGPT cites for rivals**: the exact URLs where rivals
-  are named and the brand isn't, and how to get on them, such as asking a
-  list's author to include the brand with facts, claiming and completing a
-  review profile, or answering an open thread openly as the founder.
+- **Get onto, and correct, the pages ChatGPT cites**, each at an exact URL:
+  - pages where rivals are named and the brand isn't: ask a list's author to
+    include the brand with facts, claim and complete a review profile, or
+    answer an open thread openly as the founder;
+  - pages that state wrong facts about the brand, often a rival's comparison
+    page: quote the wrong statement, give the correct fact and the page that
+    shows it, and ask the page's owner to fix it.
 
 For each fix give the exact URL, what to do, the evidence ("cited in 11 of 25
 answers; names Rival A and Rival B, not you"), rough effort, and what the
@@ -279,29 +309,32 @@ screen always comes first, in this order:
 
 ```text
 Does ChatGPT recommend you?  US · English · 14 Oct · ChatGPT only (logged-out)
-When buyers ask:  mentioned 0/25 · recommended 0/25 · your site cited 0/25
+When buyers ask:  mentioned 0/25 · recommended 0/25 · listed first 0/25 · your site cited 0/25
                   → probably in fewer than 1 in 8 answers
 Asked by name:    accurate 3/3 · recommended 3/3
 Named instead:    Rival A 19/25 · Rival B 14/25 · Rival C 9/25
-Pages it used:    g2.com/… 11 · reddit.com/r/… 7 · rivalA.com/vs/… 6
+Pages it used:    g2.com/… 11 · reddit.com/r/… 7 · rivalA.com/vs/… 6  (searched the web in 25/25)
 Do this week:     1 Get onto [cited list]  2 Add a comparison table to /compare  3 Answer [thread]
 Retest 21 Oct (~$0.20) · Not checked: Google AI, Gemini, Claude, Perplexity
 ```
 
 - The arrow line puts the "recommended" count into plain English (section 7).
-- "Pages it used" counts the buyer answers that cited each page. If fewer than
-  5 buyer answers cited any page, show the source-pass pages instead and label
-  the line "Pages it used (when made to search)".
+- "Named instead" shows recommended-in counts (section 5).
+- "Pages it used" counts the buyer answers that cited each page and ends with
+  how many buyer answers searched the web. If fewer than 5 buyer answers cited
+  any page, show the source-pass pages instead and label the line "Pages it
+  used (when made to search)".
 - When only some buyer answers cited pages, say how many next to "your site
   cited", for example "0/25 (6 answers cited pages)".
 - The retest date is a week after the check.
 
 Then: the three fixes in full; what ChatGPT said when asked by name; who it
-named instead; the pages it used, with the source pass separate; question by
-question; the next check. Details comes last: the exact questions and
-settings, timing, model, inconclusive flags, failed or replaced answers,
-receipts (tool, run id and cost per call, and the total against the approved
-maximum) and limits.
+named instead, with named in, recommended in and listed first in for each
+brand; the pages it used, with any wrong facts they state about the brand and
+the source pass kept separate; question by question; the next check. Details
+comes last: the exact questions and settings, timing, model, inconclusive
+flags, failed or replaced answers, receipts (tool, run id and cost per call,
+and the total against the approved maximum) and limits.
 
 After the first run, offer a weekly re-check: same questions and settings,
 about $0.20, compared with this week. ChatGPT's answers change from week to
@@ -320,8 +353,9 @@ compares like with like.
 - Counts use usable answers only, and every inconclusive rule was applied and
   shown.
 - The first screen follows the template: market, date and "ChatGPT only"; the
-  scorecard with a plain-English range; who ChatGPT named instead; the pages it
-  used; three fixes, or fewer with the reason; the retest date and cost; and the
+  scorecard with a plain-English range and the listed-first count; who ChatGPT
+  named instead; the pages it used and the share of answers that searched;
+  three fixes, or fewer with the reason; the retest date and cost; and the
   engines not checked.
 - Every fix names a page that was opened, or says it couldn't be.
 - Spend stayed within the approved maximum, and receipts are in Details.

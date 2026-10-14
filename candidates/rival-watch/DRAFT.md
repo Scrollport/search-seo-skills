@@ -59,18 +59,21 @@ compare.
 | Job | Tool | Input |
 | --- | --- | --- |
 | Pricing, home and changelog pages | `firecrawl.web-scrape` | url, formats ["markdown"], onlyMainContent true |
+| Home page links, to find the pricing and changelog pages (first run, or when a saved address stops working) | `firecrawl.web-scrape` | home url, formats ["links"], onlyMainContent false |
 | Sitemap: the page list with lastmod dates | `firecrawl.web-scrape` | sitemap url, formats ["rawHtml"], onlyMainContent false |
-| Page list when there is no readable sitemap | `firecrawl.site-map` | home url, limit 1000 |
-| Second read: confirm a price change or recover a failed page | `brightdata.web-scrape` | url, format "markdown" ("html" for a sitemap) |
-| News from the last week | `serper.google-search` | query [rival name], type "news", num 10, gl, hl |
-| Live ranking check, one search per money keyword | `serper.google-search` | query [keyword], type "search", num 20, gl, hl |
+| Page list when the sitemap is missing, cut off or not XML | `firecrawl.site-map` | home url, limit 1000 |
+| Second read: confirm a price change or recover a failed page | `brightdata.web-scrape` | url, format "markdown" |
+| News from the last week | `serper.google-search` | query [rival name in quotes plus a product word], type "news", num 10, gl, hl |
+| Live ranking check (top 10), one search per money keyword | `serper.google-search` | query [keyword], type "search", num 10, gl, hl |
 | Second search route when a ranking search fails | `scrapecreators.v1-google-search` | query, region, page 1 |
-| Active Meta ads | `scrapecreators.v1-facebook-adlibrary-company-ads` | companyName (or the saved pageId), country, status "ACTIVE", sort_by "relevancy_monthly_grouped", trim true |
+| Active Meta ads, newest 30 | `scrapecreators.v1-facebook-adlibrary-company-ads` | companyName (or the saved pageId), country, status "ACTIVE", sort_by "relevancy_monthly_grouped", trim true |
 | Ranking-movement counts | `dataforseo.domain-seo-overview` | target, location_name, language_name |
 
-If the ads or domain-overview tool isn't live, mark that part "not checked"
-and carry on. If both search routes fail for a keyword, mark its ranking "not
-checked"; never estimate a position.
+Searches return the top 10 results even when more are requested, so record
+positions 1–10 and anything lower as "not in top 10". If the ads or
+domain-overview tool isn't live, mark that part "not checked" and carry on. If
+both search routes fail for a keyword, mark its ranking "not checked"; never
+estimate a position.
 
 ## 3. Price and approval
 
@@ -78,52 +81,64 @@ Work out the week's maximum from the inspected prices and the exact inputs. Use
 a tool's worked-example estimate when it is higher than its listed price.
 
 - Per rival: up to 5 page reads (pricing, home, changelog, sitemap, and one
-  child sitemap when the sitemap is an index), 1 news search, 1 ads lookup and
-  1 domain overview.
+  more page-list call: a child sitemap when the sitemap is an index, or the
+  site-map tool), 1 news search, 1 ads lookup and 1 domain overview. In the
+  first week, add 1 home-links read per rival.
 - Per money keyword: 1 search.
-- Recovery: up to 3 second reads and 2 second-route searches.
+- Recovery: up to 3 extra page reads (a second read or a site-map fallback,
+  priced as a second read) and 2 second-route searches.
 
 At 14 October 2026 prices ($0.002500 a page read or search, $0.002700 an ads
 lookup or second-route search, $0.003300 a second read, $0.017000 a domain
-overview), 3 rivals and 10 keywords cost at most $0.144400. A typical week,
-with three page reads per rival, is about $0.11; 2 rivals and 5 keywords is
-about $0.07. If a maximum ever exceeds $0.150000, stop and ask.
+overview), 3 rivals and 10 keywords cost at most $0.151900 in the first week
+and $0.144400 after that. A typical week, with three page reads per rival, is
+about $0.11; 2 rivals and 5 keywords is about $0.07. If a maximum ever exceeds
+$0.160000, stop and ask.
 
 Before the first paid call, check `get_wallet` (available must cover the
 maximum) and ask once: "This week: 3 rivals, 10 keywords, about $0.11, never
-more than $0.15. Go?" A standing weekly yes covers only the same rivals,
-keywords, country and maximum; any change needs a new one. After a
-`confirmation_required` response, give the user its approval link and
-estimate, and wait.
+more than $0.15 ($0.16 in the first week). Go?" A standing weekly yes covers
+only the same rivals, keywords, country and maximum; any change needs a new
+one. After a `confirmation_required` response, give the user its approval link
+and estimate, and wait.
 
 ## 4. Collect
 
 Run calls one after another. For each rival:
 
-1. **Home page**: the hero headline and subheadline. On the first run, also ask
-   for formats ["markdown", "links"] once to find the pricing and changelog
-   pages, and save their URLs.
+1. **Home page**: the hero headline and subheadline. A main-content read
+   leaves out the navigation, so on the first run, or when a saved address
+   stops working, read the home page's links separately to find the pricing
+   and changelog pages, and save their URLs.
 2. **Pricing page**: each plan's name, price, currency and billing period, any
    free plan or trial, and up to three headline limits. Note which billing view
    the page showed (monthly or annual).
 3. **Changelog**, if the rival has one: the five newest entries with dates.
-4. **Sitemap**: read /sitemap.xml on the rival's domain. If it is an index, read
-   the one child sitemap that lists product and marketing pages rather than blog
-   posts. If there is no readable sitemap, use the site-map tool instead (no
-   dates). Keep every path with its lastmod date, and call the list partial if
-   the read was cut short.
+4. **Page list**: read /sitemap.xml on the rival's domain. If it is a sitemap
+   index, read the one child sitemap that lists product and marketing pages
+   rather than blog posts. A read stops at 100,000 characters: if a sitemap was
+   cut off, came back as an HTML page instead of XML, or is missing, treat it
+   as unreadable and use the site-map tool instead (no dates). Keep every path
+   with its lastmod date, but drop pages that users create rather than the
+   company, such as boards, cards, member and profile pages, community posts
+   and forum threads (Trello's board, card and member paths, for example).
+   Record which method built the list.
 5. **Meta ads**: look up the company name the first time, check that the
-   advertiser shown is the rival, and save its page id for later weeks. Keep
-   each active ad's id, start date, first 20 words and landing domain. No ads
-   found is a valid result.
-6. **News**: search the rival's name (add a product word if the name is
-   common) and keep items from the last 7 days with title, source, date and
-   link.
+   advertiser shown is the rival, and save its page id for later weeks. The
+   lookup returns the newest 30 active ads: when all 30 come back, say "at
+   least 30 active ads", look for new ads among them, and don't call an ad
+   that is missing from the page removed. Keep each ad's id, start date, first
+   20 words and landing domain. No ads found is a valid result.
+6. **News**: search the rival's name in quotes plus a product word, for
+   example "monday.com" work management; a bare name can pull in unrelated
+   stories, as monday.com did with VisionMonday items. Keep items from the
+   last 7 days that are about the rival, with title, source, date and link.
 7. **Ranking movement**: one domain overview. Keep the ranked keyword count,
    the new, up, down and lost counts when returned, and estimated traffic.
 
 Then the ranking check: one search per money keyword, recording the first
-position in the top 20, with its URL, for each rival's domain and the user's.
+position in the top 10, with its URL, for each rival's domain and the user's.
+Anything lower is "not in top 10".
 
 ## 5. Repeats and retries
 
@@ -162,11 +177,14 @@ pages. Ignore case, punctuation, spacing and emoji when comparing text.
    pricing, plans, enterprise, integrations, solutions, use-cases, customers,
    partners or security; a new country or language folder; any page that names
    the user; or 5 or more new pages in one section in a week, reported once.
+   Compare page lists only when both weeks used the same method.
 3. **Positioning**: the hero headline or subheadline now makes a different
    claim, or names a different audience, category or offer, or the user.
 4. **Launch or event**: a changelog entry or news item about a new product,
    plan, major feature or integration, a price change, funding, an acquisition,
    a partnership, a leadership change, an outage or a security incident.
+   Analyst reports and stock moves count only when they concern pricing,
+   product or positioning.
 5. **New ad message**: a new active ad with a new offer, price, audience or
    angle. Variants of one message count once.
 6. **Ranking move on a money keyword**: a rival entered or left the top 3,
@@ -178,9 +196,10 @@ pages. Ignore case, punctuation, spacing and emoji when comparing text.
 same claim, reordered sections, cookie banners, rotating logos or
 testimonials, counters such as customers, reviews or ratings, dates and
 copyright years, image swaps, blog posts that don't touch the user or the money
-keywords, re-uploads of the same ad, ranking moves of 1–2 places or outside the
-top 10, and lastmod dates that changed with nothing else. If most of a
-sitemap's lastmod dates share one day, treat them as a build stamp, not as
+keywords, re-uploads of the same ad, analyst reports and stock price moves that
+don't concern pricing, product or positioning, ranking moves of 1–2 places or
+outside the top 10, and lastmod dates that changed with nothing else. If most
+of a sitemap's lastmod dates share one day, treat them as a build stamp, not as
 edits.
 
 Rank material changes: price or plan first, then pages or ads aimed at the
@@ -226,8 +245,10 @@ credentials, tokens or approval links.
                  "view": "monthly", "limits": ["5 users"], "quote": "Pro $39/mo"}],
       "hero": {"headline": "...", "subheadline": "..."},
       "changelog": [{"date": "2026-10-10", "title": "..."}],
+      "page_list_method": "sitemap",
       "pages": [{"path": "/vs/yourbrand", "lastmod": "2026-10-11"}],
-      "ads": {"page_id": "...", "active": [{"id": "...", "started": "2026-10-09", "text": "..."}]},
+      "ads": {"page_id": "...", "page_full": false,
+              "active": [{"id": "...", "started": "2026-10-09", "text": "..."}]},
       "news": [{"date": "2026-10-12", "title": "...", "source": "...", "url": "..."}],
       "movement": {"keywords": 3193, "new": 1665, "up": 946, "down": 464, "lost": null, "traffic": 9079}
     }
@@ -256,8 +277,8 @@ Quiet: Gamma
 - "Week of" is the Monday of the current week; the cost is this week's actual
   spend.
 - One line per material change, at most 5, most important first.
-- "Rankings" shows the biggest material move and the user's own position, or
-  "no material moves".
+- "Rankings" shows the biggest material move and the user's own position in
+  the top 10, or "no material moves".
 - "Quiet" lists rivals with nothing material. Add a "Not checked" line, with
   the reason, when a source couldn't be read.
 - With no material change, the first line says "nothing material changed".

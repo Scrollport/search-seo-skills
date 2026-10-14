@@ -69,7 +69,7 @@
       {
         "tool_id": "firecrawl.site-map",
         "required": false,
-        "purpose": "List a rival's pages when it has no readable sitemap."
+        "purpose": "List a rival's pages when its sitemap is missing, cut off at the read limit or not XML."
       },
       {
         "tool_id": "brightdata.web-scrape",
@@ -79,7 +79,7 @@
       {
         "tool_id": "serper.google-search",
         "required": true,
-        "purpose": "Find each rival's news from the last week and check live Google positions for the money keywords."
+        "purpose": "Find each rival's news from the last week and check live Google positions (top 10) for the money keywords."
       },
       {
         "tool_id": "scrapecreators.v1-google-search",
@@ -89,7 +89,7 @@
       {
         "tool_id": "scrapecreators.v1-facebook-adlibrary-company-ads",
         "required": false,
-        "purpose": "List each rival's active Meta ads to spot new offers and messages."
+        "purpose": "List each rival's newest 30 active Meta ads to spot new offers and messages."
       },
       {
         "tool_id": "dataforseo.domain-seo-overview",
@@ -108,15 +108,15 @@
   "outputs": [
     "A one-screen weekly summary: up to 5 material changes, the biggest ranking move and the rivals that stayed quiet",
     "Before and after quotes, links and capture dates for every change",
-    "Live Google positions for your money keywords, for you and each rival",
+    "Live Google positions (top 10) for your money keywords, for you and each rival",
     "A saved snapshot so next week compares like with like",
     "Receipts, sources and limits in a Details section, and a hand-off to Next SEO Moves for SEO deep-dives"
   ],
   "cost": {
     "currency": "USD",
     "model": "Per-call page reads and Google searches, plus one Meta ads lookup and one domain overview per rival, each week.",
-    "trial_safe_max_usd": "0.150000",
-    "notes": "Re-inspect each week. At 14 October 2026 prices a typical week costs about $0.11 for 3 rivals and 10 keywords and about $0.07 for 2 rivals and 5 keywords. The maximum for 3 rivals and 10 keywords, including price confirmations and fallbacks, is $0.144400."
+    "trial_safe_max_usd": "0.160000",
+    "notes": "Re-inspect each week. At 14 October 2026 prices a typical week costs about $0.11 for 3 rivals and 10 keywords and about $0.07 for 2 rivals and 5 keywords. The maximum for 3 rivals and 10 keywords, including price confirmations and fallbacks, is $0.151900 in the first week (one extra home-links read per rival) and $0.144400 after that."
   },
   "approvals": [
     "Approve the rivals, money keywords, country and weekly maximum before the first paid call",

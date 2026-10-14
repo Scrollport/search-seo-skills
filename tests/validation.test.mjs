@@ -137,13 +137,21 @@ test("Rival Watch stays a private draft candidate until a verification run promo
   assert.throws(() => readFileSync(join(dir, "SKILL.md")), /ENOENT/);
 });
 
-test("the ChatGPT check keeps its id, names the engines it skips and makes every repeat a new paid run", () => {
+test("Rival Watch reports only what its tools return: top 10 positions and whole sitemaps", () => {
+  const draft = readFileSync(join(root, "candidates", "rival-watch", "DRAFT.md"), "utf8");
+  assert(!/top 20|num 20/.test(draft), "searches return the top 10 only");
+  assert(draft.includes("100,000 characters"), "a cut-off sitemap must fall back to the site-map tool");
+});
+
+test("the ChatGPT check keeps its id, scope, honest run time and repeat rules", () => {
   const dir = join(root, "skills", "ai-visibility-review");
   const manifest = JSON.parse(readFileSync(join(dir, "skill.json"), "utf8"));
   const instructions = readFileSync(join(dir, "SKILL.md"), "utf8");
   assert.equal(manifest.id, "ai-visibility-review");
   assert.equal(manifest.title, "ChatGPT Recommendation Check");
   assert(instructions.includes("Not checked: Google AI, Gemini, Claude, Perplexity"));
+  assert(instructions.includes("20–30 minutes") && !instructions.includes("5–15 minutes"), "state the verified run time");
+  assert(instructions.includes("listed first"), "the scorecard reports how often the brand is listed first");
   assert(instructions.includes("--input @<file> --new"), "intentional repeats must start new paid runs");
   assert(instructions.includes("without `--new`"), "a retry after a lost response must reuse the saved run");
   assert(instructions.includes("force_web_search false"), "counted answers must not force web search");

@@ -29,8 +29,17 @@
   (`seo-content-brief`). A weekly re-check is offered after the first run.
 - `serper.google-search` becomes optional. At 14 October 2026 prices a check
   costs about $0.217800 and at most $0.260800; the ceiling is $0.50.
-- Verification dates are unchanged: the 3.0.0 method still needs its own paid
-  verification run.
+- Fixes from the first paid verification run (14 October 2026), before
+  release: an honest run time of about 20–30 minutes (answers took 18–64
+  seconds each), with up to 5 answers of a round at once when the host can run
+  calls concurrently; "listed first" on the scorecard; one precise definition
+  of named in, recommended in and listed first in for every brand, with
+  "named instead" ranked by recommended in; the brand's subdomains count as its
+  site; the share of answers in which ChatGPT searched the web is reported (25
+  of 25 in that run); and a fix for correcting wrong facts about the brand on
+  pages ChatGPT cites.
+- Verification dates are unchanged: the 3.0.0 method still needs its own
+  accepted verification run.
 
 ## 2.0.2 — 2026-10-12
 
