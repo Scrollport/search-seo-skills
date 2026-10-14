@@ -171,8 +171,71 @@ test("the public package includes proof, templates and a Claude marketplace", ()
   assert.equal(plugin.version, marketplace.plugins[0].version);
   assert.equal(marketplace.plugins[0].source, "./");
   assert(/not\s+Customer-proven/.test(readFileSync(join(root, "examples", "organic-opportunity-map-verified-excerpt.md"), "utf8")));
-  assert(readFileSync(join(root, "skills", "seo-opportunity-map", "assets", "opportunity-map-template.md"), "utf8").includes("Research receipt"));
-  assert(readFileSync(join(root, "skills", "seo-content-brief", "assets", "content-brief-template.md"), "utf8").includes("Evidence and claim ledger"));
+  const moves = readFileSync(join(root, "skills", "seo-opportunity-map", "assets", "opportunity-map-template.md"), "utf8");
+  assert(moves.startsWith("# Your next 5 SEO moves"), "Next SEO Moves opens with the numbered moves");
+  assert(moves.includes("[Brief this page]"), "new-page moves hand off to the brief");
+  assert(moves.indexOf("Held:") < moves.indexOf("## Details"), "the held list comes before Details");
+  assert(moves.slice(moves.indexOf("## Details")).includes("### Costs and runs"), "run ids and costs live in Details");
+  const brief = readFileSync(join(root, "skills", "seo-content-brief", "assets", "content-brief-template.md"), "utf8");
+  assert(brief.startsWith("# Brief:"), "Article Brief + Draft opens with the brief");
+  assert(brief.indexOf("Angle:") < brief.indexOf("[Draft it now]"), "the angle leads and drafting is the next step");
+  assert(brief.indexOf("## First draft") < brief.indexOf("## Details"), "the draft comes before Details");
+  assert(brief.slice(brief.indexOf("## Details")).includes("### Costs and runs"), "run ids and costs live in Details");
+});
+
+test("Next SEO Moves and Article Brief + Draft lead with the result in plain words", () => {
+  const banned = ["page ownership", "page-action queue", "research receipt", "ledger", "evidence-led", "measurement plan"];
+  const expected = {
+    "seo-opportunity-map": {
+      title: "Next SEO Moves",
+      outcome: "Your next five SEO moves: which page to fix or write, the exact edit, and why.",
+      template: "opportunity-map-template.md",
+    },
+    "seo-content-brief": {
+      title: "Article Brief + Draft",
+      outcome: "Pick a winnable angle for one topic, then get a cited brief and a first draft to edit.",
+      template: "content-brief-template.md",
+    },
+  };
+  for (const [id, { title, outcome, template }] of Object.entries(expected)) {
+    const manifest = JSON.parse(readFileSync(join(root, "skills", id, "skill.json"), "utf8"));
+    const instructions = readFileSync(join(root, "skills", id, "SKILL.md"), "utf8").replace(/\s+/g, " ");
+    const result = readFileSync(join(root, "skills", id, "assets", template), "utf8");
+    assert(result.includes("## Details"), `${id} keeps proof in a Details appendix`);
+    const firstScreen = result.slice(0, result.indexOf("## Details")).toLowerCase();
+    const customerText = [manifest.title, manifest.summary, manifest.outcome, manifest.boundary, ...manifest.inputs, ...manifest.outputs, ...manifest.approvals].join(" ").toLowerCase();
+    assert.equal(manifest.title, title);
+    assert.equal(manifest.outcome, outcome);
+    assert(instructions.includes(`**Promise:** ${outcome}`), `${id} states its promise`);
+    assert(manifest.inputs.length <= 5 && manifest.outputs.length <= 5, `${id} keeps inputs and outputs to five`);
+    assert(!/seo agenc/i.test(manifest.summary), `${id} summary is written for founders`);
+    for (const term of banned) {
+      assert(!customerText.includes(term), `${id} manifest says "${term}"`);
+      assert(!firstScreen.includes(term), `${id} result says "${term}" before Details`);
+    }
+    assert(instructions.includes("too small to measure"), `${id} never prints missing volume as 0`);
+    assert(instructions.includes("without `--new`") && instructions.includes("idempotency_key"), `${id} retries without a second charge`);
+    assert(instructions.includes("scrollport-brief-plan"), `${id} shares the Brief this page plan file`);
+  }
+});
+
+test("fixes from the paid verification runs stay in place", () => {
+  const moves = readFileSync(join(root, "skills", "seo-opportunity-map", "SKILL.md"), "utf8").replace(/\s+/g, " ");
+  const movesResult = readFileSync(join(root, "skills", "seo-opportunity-map", "assets", "opportunity-map-template.md"), "utf8");
+  const brief = readFileSync(join(root, "skills", "seo-content-brief", "SKILL.md"), "utf8").replace(/\s+/g, " ");
+  assert(moves.includes("about 10–15 minutes") && !moves.includes("under 10 minutes"), "Next SEO Moves states an honest time");
+  assert(moves.includes("pages made by the site's users") && moves.includes("other brands' navigational searches"), "samples drop users' pages and other brands' searches");
+  assert(moves.includes("with its data date"), "sample positions that today's results page does not confirm carry their data date");
+  assert(moves.includes("at least two CREATE candidates"), "the shortlist keeps two new-page candidates");
+  assert(!movesResult.slice(movesResult.indexOf("## Details")).includes("### Sources"), "Details does not repeat the moves table as a sources list");
+  assert(brief.includes("research about 3 minutes") && brief.includes("6–8 minutes"), "Article Brief + Draft states an honest time");
+  assert(!brief.includes("search_volume,desc") && brief.includes("key terms"), "keyword ideas are not sorted by volume and keep the seed's key terms");
+  assert(brief.includes("Check for a page you already have"), "the brief checks for an existing page before briefing");
+  assert(brief.includes("Re-pick only once"), "the target can be re-picked once after reading the results page");
+  assert(moves.includes("whether it is one of the five or held") && moves.includes("[Brief this page] after its reason in the Held line"), "held new-page topics keep their plan file and hand-off");
+  assert(moves.includes("drop that CREATE only when today's results page shows a different page type wins"), "a new page stays in the five unless another page type wins");
+  assert(movesResult.includes("Held: {topic} ({reason}) [Brief this page]"), "the result template shows the hand-off on held new pages");
+  assert(brief.includes("update the one closest to the reader and recommend linking the others to it"), "with several existing pages, the brief updates the closest and links the rest");
 });
 
 // A due date remains current through the end of that UTC day.
