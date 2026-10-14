@@ -38,8 +38,9 @@
   site; the share of answers in which ChatGPT searched the web is reported (25
   of 25 in that run); and a fix for correcting wrong facts about the brand on
   pages ChatGPT cites.
-- Verification dates are unchanged: the 3.0.0 method still needs its own
-  accepted verification run.
+- Verified 14 October 2026: answers collected under the unchanged 3.0.0
+  method, report regenerated under these revised rules
+  (evidence/2026-10-14-verification.md).
 
 ## 2.0.2 — 2026-10-12
 
