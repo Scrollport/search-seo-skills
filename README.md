@@ -25,9 +25,9 @@ discovery selects the relevant outcome Skill for each request.
 
 ## Inspect the proof before installing
 
-- [Latest Next SEO Moves verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): run on version 4.0.1, then called Organic Opportunity Map. Two existing-page updates and one hold for a software business, each checked against live results and the pages involved. Version 5.0.0 changes the result format and adds checks; its own verification run is pending.
+- [Latest Next SEO Moves verification](skills/seo-opportunity-map/evidence/2026-10-12-reverification.md): run on version 4.0.1, then called Organic Opportunity Map. Two existing-page updates and one hold for a software business, each checked against live results and the pages involved. Version 5.1.0 changes the result format and adds checks; its own verification evidence is pending.
 - [Latest AI Visibility Review verification](skills/ai-visibility-review/evidence/2026-10-12-reverification.md): a complete nine-answer ChatGPT panel, separate branded and unbranded coding, and two inspected page actions.
-- [Latest Article Brief + Draft verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): run on version 3.0.1, which produced a brief only. A UK brief whose topic was chosen for reader fit over volume, with every claim tied to a source and an outline mapped to those sources. Version 4.0.0 adds phrase expansion, today's results, a ChatGPT check and the first draft; its own verification run is pending.
+- [Latest Article Brief + Draft verification](skills/seo-content-brief/evidence/2026-10-12-reverification.md): run on version 3.0.1, which produced a brief only. A UK brief whose topic was chosen for reader fit over volume, with every claim tied to a source and an outline mapped to those sources. Version 4.1.0 adds phrase expansion, today's results, a ChatGPT check and the first draft; its own verification evidence is pending.
 
 Earlier public synthetic examples from August 2026 remain available for
 context. They show the older result formats:

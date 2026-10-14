@@ -26,9 +26,9 @@ system of record.
 
 | Rank | Customer job | Required artifact | Coverage | Evidence gate |
 | --- | --- | --- | --- | --- |
-| 1 | Decide which pages to fix or write next | Five numbered moves with exact edits, reasons and effort, a held list and plan files for new pages | Verified: `seo-opportunity-map` (Next SEO Moves) | 12 October 2026 rehearsal of 4.0.1: two updates and one hold at $0.167300; 5.0.0 awaits its paid verification run |
+| 1 | Decide which pages to fix or write next | Five numbered moves with exact edits, reasons and effort, a held list and plan files for new pages | Verified: `seo-opportunity-map` (Next SEO Moves) | 12 October 2026 rehearsal of 4.0.1: two updates and one hold at $0.167300; first paid run of 5.0.0 on 14 October 2026: five updates at $0.26 in 11.4 minutes; 5.1.0 fixes its findings |
 | 2 | Explain observed AI-search answers and what to improve | Fixed ChatGPT panel, citation evidence and page/source actions | Verified: `ai-visibility-review` | Primary panel 9/9; optional comparison 6/9; source checks and reviewed output at $0.069600 including both routes |
-| 3 | Write one article that can rank | Angle, headings with what each must prove and its source, questions to answer and a cited first draft | Verified: `seo-content-brief` (Article Brief + Draft) | 12 October 2026 rehearsal of 3.0.1 (brief only) at $0.027600; 4.0.0 awaits its paid verification run |
+| 3 | Write one article that can rank | Angle, headings with what each must prove and its source, questions to answer and a cited first draft | Verified: `seo-content-brief` (Article Brief + Draft) | 12 October 2026 rehearsal of 3.0.1 (brief only) at $0.027600; first paid run of 4.0.0 on 14 October 2026 passed every content check at $0.099; 4.1.0 fixes its findings |
 | 4 | Cluster a keyword universe or conduct a technical page audit | Cluster map or technical diagnosis | Not separately packaged | Needs a distinct useful artifact and complete rehearsal |
 | 5 | Find link opportunities | Link-gap artifact | Deferred | Add only after direct demand and a repeatable decision output |
 
@@ -57,7 +57,7 @@ wrappers around individual API endpoints. A new function Skill must have:
   explicit uncertainty and no-ranking-guarantee boundary.
 - **Low-friction trial:** one site, one market, two auto-found rivals and five
   moves inside a $0.275800 maximum at 14 October 2026 prices; one brief and
-  draft inside $0.104200, plus an optional $0.126000 demand check; AI collection has its own bounded prompt plan.
+  draft inside $0.120700, plus an optional $0.126000 demand check; AI collection has its own bounded prompt plan.
 - **Qualification:** demonstrated unresolved customer pain precedes the offer; an internal example is not customer validation.
 
 The campaign may begin only after the public repository, Skill page and proof

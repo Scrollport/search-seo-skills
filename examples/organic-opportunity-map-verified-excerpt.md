@@ -2,7 +2,8 @@
 
 Status: abridged public synthetic example; verified 27 August 2026 with an
 earlier version, then called Organic Opportunity Map; not Customer-proven.
-Version 5.0.0 opens with five numbered moves instead of this decision table.
+Since version 5.0.0 the result opens with five numbered moves instead of this
+decision table.
 
 ## Starting brief
 

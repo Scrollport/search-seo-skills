@@ -1,22 +1,22 @@
 # Your next 5 SEO moves · {site} · {country}
 
-{Only when the site ranks for under 50 phrases: "{site} ranks for {n} phrases in {country}, so most moves come from what rivals rank for."}
+{Only when the site ranks for under 50 phrases, or most of its sample came from its users' pages: "{site} ranks for {n} phrases in {country}" or "most of {site}'s top phrases come from its users' pages", then "so most moves come from what rivals rank for."}
 
 1. **CREATE** {proposed path} ({page type}): {n}/mo, nothing of yours covers it · {effort} [Brief this page]
 2. **UPDATE** {path}: {exact edit, short}; {rival} ranks #{n} with it, you're #{n} · {effort}
 3. **UPDATE** {path}: you're #{n} for "{query}" ({n}/mo) · AI Overview · {effort}
-4. **{CREATE or UPDATE}** {page}: {exact edit or gap}; {the number behind it} · {effort}
+4. **UPDATE** {path}: #{n} for "{query}" in {month} data, not on page one today · {effort}
 5. **{CREATE or UPDATE}** {page}: {exact edit or gap}; {the number behind it} · {effort}
 
 Held: {topic} ({reason}) · {topic} ({reason})
 Evidence: {Strong, Medium or Thin}, {reason, for example "no Search Console export"} · ${spent} · [Details ▸](#details)
 
-Monthly searches rank these options; they are not a traffic forecast. A missing number reads "too small to measure", never 0.
+Monthly searches rank these options; they are not a traffic forecast. A missing number reads "too small to measure", never 0. Positions are today's unless marked with their data date.
 
 ## 1. {CREATE or UPDATE} {page}
 
 - **Do this:** {the exact edit. New page: page type, H1, the sections and tables it needs, and which of your pages link to it. Existing page: the title, heading, section, table, answer or internal link to add.}
-- **Why:** {the numbers: monthly searches or "too small to measure", your position, who ranks today and where, Search Console impressions}
+- **Why:** {the numbers: monthly searches or "too small to measure", your position (today's, or the sample's with its data date), who ranks today and where, Search Console impressions}
 - **Google today ({date}):** {the kind of page that wins}; AI Overview {shows or not shown}
 - **Effort:** {about 1 hour, half a day, or 1–2 days}
 - **Done when:** {a check anyone can see, for example "the pricing page shows the table and /features links to it"}
@@ -34,26 +34,20 @@ Monthly searches rank these options; they are not a traffic forecast. A missing 
 
 ### How sure this is
 
-{Evidence level and why. Without a Search Console export: "Medium. An export of your queries and pages (up to 1,000 rows each) would show your real positions and impressions and usually turns more moves into quick updates."}
+{Evidence level and why, in two or three lines. Without a Search Console export: "Medium. An export of your queries and pages (up to 1,000 rows each) would show your real positions and impressions and usually turns more moves into quick updates."}
 
 ### All moves in one table
 
-| # | Buyer task | Demand (source, date) | Page | Action | What we checked | Exact edit and internal link | Owner · effort | Done when |
+| # | Buyer task | Demand (source, date) | Page | Action | What we checked (pages, dates) | Exact edit and internal link | Owner · effort | Done when |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | {what the buyer is trying to do} | {n}/mo or too small to measure ({tool}, {date}) | {path} | {CREATE or UPDATE} | {results page, site search, page read} | {edit} | {role} · {effort} | {check} |
+| 1 | {what the buyer is trying to do} | {n}/mo or too small to measure ({tool}, {date}) | {path} | {CREATE or UPDATE} | {results page {date}; site search; {URLs read}} | {edit} | {role} · {effort} | {check} |
 
 ### What we checked
 
 - Market and date: {country}, {language}, {date}
-- Samples (100 rows each, by search volume): {site} ({n} phrases ranked in total), {rival 1}, {rival 2}
+- Samples (100 rows each, by search volume, data from {month}): {site} ({n} phrases ranked in total; {n} rows dropped as users' pages or other brands' searches), {rival 1}, {rival 2}
 - Search Console: {queries and pages, {date range}, or not supplied}; AI features report: {used or not supplied}
 - Overview: {n} phrases; site searches: {n}; results pages: {n}; page reads: {n} (backup reads: {n})
-
-### Sources
-
-| Move | What it shows | Source | Seen |
-| --- | --- | --- | --- |
-| {#} | {for example "rival ranks #3 with a pricing table"} | {URL or tool and run id} | {date} |
 
 ### Costs and runs
 
@@ -66,6 +60,6 @@ Total ${spent} of ${approved} approved.
 ### Limits
 
 - Samples, not a full keyword list: a phrase missing from a 100-row sample was not seen, which is different from not ranking.
-- One market; results pages checked on one day from one location.
+- Sample positions are as of their data date; today's results pages were checked on one day from one location.
 - Not checked: technical SEO, indexing, backlinks or conversions.
 - {Pages not read, and product facts to confirm with you.}

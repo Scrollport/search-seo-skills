@@ -1,5 +1,25 @@
 # Changelog
 
+## 5.1.0 — 2026-10-14
+
+Fixes from the first paid verification of 5.0.0 (cal.com, United States:
+five useful UPDATE moves for $0.26 in 11.4 minutes):
+
+- State the honest time, about 10–15 minutes.
+- Clean all three samples before use: drop rows from pages the site's users
+  make (profiles, booking pages, user subdomains) and other brands'
+  navigational searches. When most of the site's sample is dropped, say so
+  and lead with the rivals' gap.
+- Quote today's position from the results page; when today's page disagrees
+  with a sample position or does not show the site, give the sample position
+  with its data date.
+- Keep at least two CREATE candidates among the six checked, so one usually
+  survives the site search.
+- Trim Details: drop the sources table that repeated the moves table; the
+  moves table now carries the pages and dates checked.
+- Plan files record the site search, so Article Brief + Draft does not repeat
+  it.
+
 ## 5.0.0 — 2026-10-14
 
 - Rename the Skill to Next SEO Moves (id unchanged) with the promise "Your next

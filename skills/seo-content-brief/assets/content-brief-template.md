@@ -1,6 +1,7 @@
 # Brief: {working title} · {country} · Evidence: {Strong, Medium or Thin}
 
-Target: "{keyword}" {n}/mo, or "too small to measure, not zero" (+{n} related)
+{Only when the site already has a page on this: "Update {path} rather than writing a new page: it already covers this topic."}
+Target: "{keyword}" {n}/mo, or "too small to measure, not zero" (+{n} related){, after a re-pick: "re-picked: Google reads '{old phrase}' as {other meaning}"}
 Google shows: {the kind of page that wins}; AI Overview {shows, cites {domains}, or not shown}
 ChatGPT cites: {domains, or "no sources cited"}
 Angle: {what only you can claim, in one sentence}
@@ -43,6 +44,8 @@ Say "Draft it now" for a first draft that follows these headings, or change the 
 ## First draft
 
 > First draft for you to edit. Check every fact and fill the [ADD …] placeholders before publishing.
+
+{When updating an existing page: only the new and changed sections, each marked [NEW] or [CHANGED].}
 
 Meta title: {under 60 characters, including the target phrase}
 Meta description: {under 155 characters}
@@ -88,6 +91,8 @@ Monthly searches rank options; they are not a traffic forecast.
 | 1 | {URL} | {how-to guide} | {…} | {…} |
 
 AI Overview: {shows or not shown}; {cited domains, if returned}.
+Re-pick: {none, or "'{old phrase}' shows {other meaning}, so the target moved to '{keyword}'"}.
+Your existing page: {none found by site search, or {URL}}.
 
 ### ChatGPT answer ({date})
 

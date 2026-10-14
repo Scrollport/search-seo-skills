@@ -189,6 +189,21 @@ test("Next SEO Moves and Article Brief + Draft lead with the result in plain wor
   }
 });
 
+test("fixes from the first paid verification stay in place", () => {
+  const moves = readFileSync(join(root, "skills", "seo-opportunity-map", "SKILL.md"), "utf8").replace(/\s+/g, " ");
+  const movesResult = readFileSync(join(root, "skills", "seo-opportunity-map", "assets", "opportunity-map-template.md"), "utf8");
+  const brief = readFileSync(join(root, "skills", "seo-content-brief", "SKILL.md"), "utf8").replace(/\s+/g, " ");
+  assert(moves.includes("about 10–15 minutes") && !moves.includes("under 10 minutes"), "Next SEO Moves states an honest time");
+  assert(moves.includes("pages made by the site's users") && moves.includes("other brands' navigational searches"), "samples drop users' pages and other brands' searches");
+  assert(moves.includes("with its data date"), "sample positions that today's results page does not confirm carry their data date");
+  assert(moves.includes("at least two CREATE candidates"), "the shortlist keeps two new-page candidates");
+  assert(!movesResult.slice(movesResult.indexOf("## Details")).includes("### Sources"), "Details does not repeat the moves table as a sources list");
+  assert(brief.includes("research about 3 minutes") && brief.includes("6–8 minutes"), "Article Brief + Draft states an honest time");
+  assert(!brief.includes("search_volume,desc") && brief.includes("key terms"), "keyword ideas are not sorted by volume and keep the seed's key terms");
+  assert(brief.includes("Check for a page you already have"), "the brief checks for an existing page before briefing");
+  assert(brief.includes("Re-pick only once"), "the target can be re-picked once after reading the results page");
+});
+
 // A due date remains current through the end of that UTC day.
 test("publication rejects invalid and future verification and withholds an overdue review", () => {
   const now = new Date("2026-09-07T23:59:59Z");

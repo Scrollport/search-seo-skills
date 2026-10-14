@@ -1,5 +1,24 @@
 # Changelog
 
+## 4.1.0 — 2026-10-14
+
+Fixes from the first paid verification of 4.0.0 ("round robin scheduling"
+for cal.com, United States: every content check passed for $0.099; research
+took 2.75 minutes and brief plus draft 5.6 minutes):
+
+- State the honest time: research in about 3 minutes; brief and draft in
+  about 6–8 minutes in all.
+- Request keyword ideas in the provider's default order instead of by search
+  volume, and keep only ideas that contain the seed's key terms.
+- Before briefing, run one site: search for an existing page on the final
+  target; when one exists, recommend updating it and brief the update.
+- Allow one re-pick of the target after reading the results page, when Google
+  reads the phrase differently (CPU-scheduling explainers for "round robin
+  scheduling").
+- Maximum rises to $0.120700 at 14 October 2026 prices (site search
+  $0.002500; one re-pick results page $0.014000), plus the optional
+  $0.126000 demand check.
+
 ## 4.0.0 — 2026-10-14
 
 - Rename the Skill to Article Brief + Draft (id unchanged) with the promise
