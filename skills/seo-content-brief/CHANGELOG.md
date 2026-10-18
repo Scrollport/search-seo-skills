@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.1.2 — 2026-10-18
+
+Wording only: the summary no longer names an audience. It starts "It finds the
+phrases people really search". The workflow, tools, prices and the 14 October
+verification are unchanged.
+
 ## 4.1.1 — 2026-10-14
 
 - Clarify step 7: when the site already has several pages on the topic,

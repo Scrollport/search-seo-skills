@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "Verified Search and SEO Skills powered by Scrollport.",
-    "version": "5.0.0"
+    "version": "5.0.1"
   },
   "plugins": [
     {
       "name": "search-seo-skills",
       "description": "Get your next SEO moves, article briefs with first drafts, and a check of how often ChatGPT recommends you.",
-      "version": "5.0.0",
+      "version": "5.0.1",
       "source": "./"
     }
   ]

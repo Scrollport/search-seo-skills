@@ -3,10 +3,9 @@
 Know which pages to fix or write next, then get each new page briefed and
 drafted, without paying for separate SEO tools.
 
-This package is for founders and small teams who do their own marketing with an
-AI agent. Scrollport supplies live search data through one connection and one
-prepaid wallet; each Skill shows its maximum cost and waits for your yes before
-it spends anything.
+Your AI agent does the research and the writing. Scrollport supplies live
+search data through one connection and one prepaid wallet; each Skill shows its
+maximum cost and waits for your yes before it spends anything.
 
 ## Start with the outcome
 
