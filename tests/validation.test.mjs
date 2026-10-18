@@ -208,7 +208,8 @@ test("Next SEO Moves and Article Brief + Draft lead with the result in plain wor
     assert.equal(manifest.outcome, outcome);
     assert(instructions.includes(`**Promise:** ${outcome}`), `${id} states its promise`);
     assert(manifest.inputs.length <= 5 && manifest.outputs.length <= 5, `${id} keeps inputs and outputs to five`);
-    assert(!/seo agenc/i.test(manifest.summary), `${id} summary is written for founders`);
+    // The Skills serve anyone doing their own SEO, so the summary names no audience (18 Oct 2026).
+    assert(!/seo agenc|founders and small teams/i.test(manifest.summary), `${id} summary names an audience`);
     for (const term of banned) {
       assert(!customerText.includes(term), `${id} manifest says "${term}"`);
       assert(!firstScreen.includes(term), `${id} result says "${term}" before Details`);

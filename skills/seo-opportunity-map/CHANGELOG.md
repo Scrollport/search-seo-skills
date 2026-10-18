@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.1.2 — 2026-10-18
+
+Wording only: the summary no longer names an audience. It starts "It checks
+what your site and two rivals rank for". The workflow, tools, prices and the 14
+October verification are unchanged.
+
 ## 5.1.1 — 2026-10-14
 
 From the second paid verification of 5.1.0 on cal.com, which passed every
