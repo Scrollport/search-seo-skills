@@ -14,7 +14,7 @@ report = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(report)
 
 
-def fixture():
+def fixture(core=False):
     data = {
         "schema_version": 1, "method": "aeo-v4",
         "brand": {"name": "Example Co", "domains": ["example.com"], "aliases": ["Example"]},
@@ -30,6 +30,11 @@ def fixture():
         "approved_max_usd": "0.500000", "scope_note": "Synthetic reduced test: two engines and two questions.",
         "observations": [], "receipts": [], "opportunities": [],
     }
+    if core:
+        data["questions"].extend({"id": f"q{i}", "text": f"Which suppliers fit scenario {i}?"} for i in range(3, 6))
+        data["engines"].append({"id": "google_ai_mode", "tool_id": "cloro.google-ai-mode",
+                                "surface": "logged_out_web", "rounds": 3, "settings": {"gl": "US", "hl": "en"}})
+        data["scope_note"] = "Synthetic complete buyer plan."
     for engine in data["engines"]:
         for question in data["questions"]:
             for round_ in range(1, 4):
@@ -50,6 +55,68 @@ def fixture():
 
 
 class ReportTests(unittest.TestCase):
+    def test_rejects_raw_metadata_at_every_exported_object_boundary(self):
+        paths = [(), ("brand",), ("rivals", 0), ("market",), ("questions", 0), ("engines", 0),
+                 ("engines", 0, "settings"), ("observations", 0), ("observations", 0, "sources", 0),
+                 ("observations", 0, "verdicts", 0), ("receipts", 0),
+                 ("opportunities", 0), ("opportunities", 0, "contact"), ("by_name_findings", 0), ("changes", 0)]
+        for path in paths:
+            with self.subTest(path=path):
+                data = fixture()
+                data["opportunities"] = [{"url": "https://example.com/about", "kind": "owned",
+                    "opened_at": "2026-10-20T12:10:00Z", "excerpt": "About", "gap": "Missing detail",
+                    "action": "Clarify eligibility", "owner": "Marketing", "effort": "One hour", "recheck": "In one month",
+                    "observation_ids": [data["observations"][0]["run_id"]],
+                    "contact": {"label": "Contact", "source_url": "https://example.com/contact"}}]
+                data["changes"] = [{"date": "2026-10-20", "description": "No changes"}]
+                # Earlier object boundaries reject the metadata before the deliberately
+                # absent by-name evidence; this case checks that finding boundary itself.
+                if path and path[0] == "by_name_findings":
+                    data["by_name_findings"] = [{"engine": "gemini", "quote": "Example Co",
+                        "fact": "Observed name", "source_url": "https://example.com/about"}]
+                target = data
+                for key in path:
+                    target = target[key]
+                target["authorization"] = "PRIVATE_SENTINEL"
+                with self.assertRaisesRegex(ValueError, "Undeclared fields"):
+                    report.summarize(data)
+        data = fixture()
+        data["observations"][0]["sources"][0]["title"] = {"authorization": "PRIVATE_SENTINEL"}
+        with self.assertRaises(ValueError):
+            report.summarize(data)
+
+    def test_invalid_metadata_cannot_write_portable_output(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data = fixture()
+            data["observations"][0]["provider_billing"] = {"token": "PRIVATE_SENTINEL"}
+            input_path = root / "input.json"
+            input_path.write_text(json.dumps(data))
+            output = root / "report"
+            result = subprocess.run(["python3", str(SCRIPT), "--input", str(input_path), "--output", str(output)],
+                                    capture_output=True, text=True)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertFalse(output.exists())
+            self.assertNotIn("PRIVATE_SENTINEL", result.stderr + result.stdout)
+
+    def test_reduced_plans_cannot_look_like_the_complete_core(self):
+        data = fixture()
+        data["scope_note"] = "A report."  # Do not depend on the agent disclosing reductions.
+        summary = report.summarize(data)
+        first_screen = report.render(data, summary).split("<h2>Next actions")[0]
+        self.assertIn("Core plan incomplete", first_screen)
+        self.assertIn("Missing core engines: google_ai_mode", first_screen)
+        self.assertIn("Reduced buyer questions: 2/5", first_screen)
+        self.assertNotIn("Buyer coverage sufficient for a descriptive comparison", first_screen)
+        comparison = report.compare(data, copy.deepcopy(data))
+        self.assertTrue(comparison["comparable"])  # Same reduced plan can still be compared honestly.
+        self.assertIn("limited to the declared reduced plan", comparison["limit"])
+        complete = fixture(core=True)
+        self.assertEqual(report.summarize(complete)["plan_limitations"], [])
+        complete["engines"][0]["rounds"] = 2
+        complete["observations"] = [r for r in complete["observations"] if r["engine"] != "gemini" or r["round"] < 3]
+        self.assertIn("gemini: reduced rounds 2/3", report.summarize(complete)["plan_limitations"])
+
     def test_retrospective_costs_do_not_invent_a_customer_wallet_approval(self):
         data = fixture()
         data["approved_max_usd"] = None

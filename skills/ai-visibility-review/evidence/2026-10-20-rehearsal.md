@@ -80,3 +80,23 @@ versions and the small convenience sample limit interpretation. No website
 change, outreach, recurring monitor, customer-proof or causal improvement
 claim is part of verification. Raw answers, private receipts, access links
 and account identifiers are excluded from this public repository.
+
+## Report boundary patch 4.0.1
+
+The website export review identified two report-helper gaps: undeclared nested
+metadata could enter portable output, and a reduced declared plan could appear
+complete without an explicit scope note. Strict object fields now reject raw
+metadata before any output files are written. The first screen independently
+flags omitted engines, fewer than five questions and fewer than three rounds;
+matched reduced plans remain comparable only within their disclosed scope.
+
+All three retained 59-observation checkpoints were rendered again without new
+API calls. Execution-environment notes, recovery timestamps and isolated-cost
+notes remain in separate private provenance files alongside the unchanged
+original checkpoints; their existing scope notes still explain the qualification
+context. Observations, quotes, citations, receipts and recorded costs were
+unchanged. The baseline/recheck comparison remains valid; the production report
+still records $0.264400 in wallet charges and total qualification wholesale stays
+$0.458800. All 24 Node tests, including 15 Python behavior tests, and export build
+pass. Synthetic checks prove unknown fields cannot create output or print their
+values, and that a vague scope note cannot conceal a reduced plan.

@@ -1,6 +1,6 @@
 # ICP and jobs for Search and SEO Skills
 
-Status: maintainer decision record; updated 20 October 2026 for AI Visibility and Citation Plan 4.0.0. The 14 October decisions for Next SEO Moves, Article Brief + Draft and the Rival Watch draft candidate remain unchanged.
+Status: maintainer decision record; updated 20 October 2026 for AI Visibility and Citation Plan 4.0.1. The 14 October decisions for Next SEO Moves, Article Brief + Draft and the Rival Watch draft candidate remain unchanged.
 
 ## Primary customer
 
@@ -27,7 +27,7 @@ system of record.
 | Rank | Customer job | Required artifact | Coverage | Evidence gate |
 | --- | --- | --- | --- | --- |
 | 1 | Decide which pages to fix or write next | Five numbered moves with exact edits, reasons and effort, a held list and plan files for new pages | Verified: `seo-opportunity-map` (Next SEO Moves) | 12 October 2026 rehearsal of 4.0.1: two updates and one hold at $0.167300; 5.1.1 verified 14 October 2026 on two public sites at about $0.26 a run, including the new-page hand-off |
-| 2 | See whether AI answers recommend the business and which changes to test | Separate engine counts from 45 buyer answers, nine by-name checks, five source checks, checked citation opportunities, three actions and a comparable recheck | Verified: `ai-visibility-review` (AI Visibility and Citation Plan) | 4.0.0 verified 20 October 2026: 59 usable production observations and four page reads, $0.264400 in wallet charges. Complete baseline/recheck method rehearsal also passed. No independent customer outcome or improvement claim |
+| 2 | See whether AI answers recommend the business and which changes to test | Separate engine counts from 45 buyer answers, nine by-name checks, five source checks, checked citation opportunities, three actions and a comparable recheck | Verified: `ai-visibility-review` (AI Visibility and Citation Plan) | 4.0.1 report patch verified against the retained 20 October 2026 qualification: 59 usable production observations and four page reads, $0.264400 in wallet charges. Complete baseline/recheck method rehearsal also passed. No independent customer outcome or improvement claim |
 | 3 | Write one article that can rank | Angle, headings with what each must prove and its source, questions to answer and a cited first draft | Verified: `seo-content-brief` (Article Brief + Draft) | 12 October 2026 rehearsal of 3.0.1 (brief only) at $0.027600; 4.1.0 passed its paid verification on 14 October 2026 at $0.114500 |
 | 4 | Know what rivals changed this week | Up to five material changes with before/after quotes and links, a live ranking check, quiet rivals and a saved weekly snapshot | Draft candidate: `rival-watch` (Rival Watch) | First baseline run 14 October 2026 at $0.109100; needs a second run at least 7 days later before it can be verified |
 | 5 | Cluster a keyword universe or conduct a technical page audit | Cluster map or technical diagnosis | Not separately packaged | Needs a distinct useful artifact and complete rehearsal |

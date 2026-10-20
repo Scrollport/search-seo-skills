@@ -17,7 +17,7 @@ test("verified AEO v4 exports its complete multi-engine report package", () => {
   const exported = JSON.parse(readFileSync(new URL("../dist/registry.json", import.meta.url)));
   const current = exported.skills.filter((skill) => skill.id === "ai-visibility-review");
   assert.equal(current.length, 1);
-  assert.equal(current[0].version, "4.0.0");
+  assert.equal(current[0].version, "4.0.1");
   assert.equal(current[0].status, "verified");
   assert(readFileSync(new URL("../dist/skills/ai-visibility-review/scripts/report.py", import.meta.url), "utf8").includes("no network"));
   assert(current[0].dependencies.catalog_tools.some((tool) => tool.tool_id.startsWith("cloro.")));

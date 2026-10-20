@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "ai-visibility-review",
   "title": "AI Visibility and Citation Plan",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "status": "verified",
   "customer_proven": false,
   "summary": "Check how ChatGPT, Gemini and Google AI Mode answer buyer questions, investigate the pages cited in those answers, and turn the evidence into a prioritized action plan and repeatable recheck.",
