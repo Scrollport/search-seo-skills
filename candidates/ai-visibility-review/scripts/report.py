@@ -206,12 +206,21 @@ def summarize(data):
             flags.append("Insufficient buyer coverage")
         if len(models) > 1:
             flags.append("Observed model changed within sample")
+        by_name = tally([r for r in data["observations"] if r["engine"] == key and r["phase"] == "by_name"], data["brand"])
+        source = tally([r for r in data["observations"] if r["engine"] == key and r["phase"] == "source"], data["brand"])
+        secondary_flags = []
+        if by_name["usable"] < engine["rounds"]:
+            secondary_flags.append(f"By-name fact-check coverage incomplete: {by_name['usable']}/{engine['rounds']} usable")
+        if key == "chatgpt" and source["usable"] < len(data["questions"]):
+            secondary_flags.append(f"Forced source-pass coverage incomplete: {source['usable']}/{len(data['questions'])} usable")
         groups[key] = {**total, "planned": planned, "missing": planned - len(rows), "models": models,
                        "model_unknown": any(r["status"] == "ok" and r["model"] is None for r in rows),
-                       "flags": flags, "questions": questions,
+                       "flags": flags, "secondary_flags": secondary_flags, "questions": questions,
                        "rivals": {b["name"]: tally(rows, b) for b in data["rivals"]},
-                       "by_name": tally([r for r in data["observations"] if r["engine"] == key and r["phase"] == "by_name"], data["brand"]),
-                       "source": tally([r for r in data["observations"] if r["engine"] == key and r["phase"] == "source"], data["brand"])}
+                       "rival_questions": {b["name"]: {
+                           q["id"]: tally([r for r in rows if r["question_id"] == q["id"]], b)
+                           for q in data["questions"]} for b in data["rivals"]},
+                       "by_name": by_name, "source": source}
     total = sum((money(r["cost_usd"]) for r in data["receipts"] if r["cost_usd"] is not None), Decimal(0))
     return {"engines": groups, "known_cost_usd": format(total, ".6f"),
             "unknown_cost_receipts": sum(r["cost_usd"] is None for r in data["receipts"])}
@@ -229,7 +238,7 @@ def compare(before, after):
         if previous["models"] != current["models"]:
             reasons.append(f"{key}: observed model disclosure/version changed")
     return {"comparable": not reasons, "reasons": reasons, "before": left, "after": right,
-            "limit": "Matched request settings do not control unknown model versions. Before/after movement is not proof of causation."}
+            "limit": "Comparison covers buyer answers only; by-name and source-pass coverage is separate. Matched request settings do not control unknown model versions. Before/after movement is not proof of causation."}
 
 
 def render(data, summary, comparison=None):
@@ -240,7 +249,10 @@ def render(data, summary, comparison=None):
         return "<table><thead><tr>" + "".join(f"<th>{escape(h)}</th>" for h in headers) + "</tr></thead><tbody>" + "".join(
             "<tr>" + "".join(f"<td>{escape(c)}</td>" for c in row) + "</tr>" for row in rows) + "</tbody></table>"
     def fraction(row, key, denominator="usable"):
-        return f'{row[key]}/{row[denominator]}'
+        return f'{row[key]}/{row[denominator]}' if row[denominator] else "unavailable (0 usable)" if denominator == "usable" else "unknown (0 citation records)"
+    metrics = (("mentioned", "usable"), ("recommended", "usable"), ("first", "usable"), ("cited", "citation_known"))
+    def counts(row):
+        return [fraction(row, key, denominator) for key, denominator in metrics]
     parts = [f"<h1>{escape(data['brand']['name'])}: AI visibility and citation plan</h1>",
              f"<p>{escape(data['market']['country'])} · {escape(data['market']['language'])} · {escape(data['scope_note'])}</p>",
              "<p>Counts from a small repeated sample. Engines are separate; missing citations are not zero. Nothing has been sent or published.</p>"]
@@ -251,19 +263,24 @@ def render(data, summary, comparison=None):
     for key, row in groups.items():
         parts.append(f"<p><strong>{escape(key)}</strong>: {escape('; '.join(row['flags']) or 'Buyer coverage sufficient for a descriptive comparison')}. "
                      f"Model: {escape(', '.join(row['models']) or 'not reported')}{'; some versions unknown' if row['model_unknown'] else ''}.</p>")
+        if row["secondary_flags"]:
+            parts.append(f"<p><strong>Incomplete workflow — {escape(key)}:</strong> {escape('; '.join(row['secondary_flags']))}. "
+                         "Buyer counts remain separate; factual-accuracy and citation-opportunity conclusions have limited coverage.</p>")
     parts.append("<h2>Next actions and citation opportunities</h2>")
     if not data.get("opportunities"):
         parts.append("<p>No checked opportunities recorded. Do not invent a top-three list.</p>")
     for page in data.get("opportunities", []):
-        counts = {}
+        citation_counts = {}
         for row in data["observations"]:
             if row["status"] == "ok" and any(canonical_url(s["url"]) == canonical_url(page["url"]) for s in row["sources"] or []):
                 group = row["engine"] + " / " + row["phase"]
-                counts[group] = counts.get(group, 0) + 1
+                citation_counts[group] = citation_counts.get(group, 0) + 1
         parts.extend([f"<article><h3>{link(page['url'])}</h3>", f"<blockquote>{escape(page['excerpt'])}</blockquote>",
                       f"<p>{escape(page['gap'])}</p><p><strong>Action:</strong> {escape(page['action'])}</p>",
                       f"<p>{escape(page['owner'])} · {escape(page['effort'])} · Recheck: {escape(page['recheck'])}</p>",
-                      f"<p>Checked {escape(page['opened_at'])}. Cited observations: {escape(json.dumps(counts))}</p>"])
+                      f"<p>Checked {escape(page['opened_at'])}. Cited observations: {escape(json.dumps(citation_counts))}</p>"])
+        parts.append("<p>Supporting observations: " + ", ".join(
+            f'<a href="#observation-{escape(run_id)}">{escape(run_id)}</a>' for run_id in page["observation_ids"]) + "</p>")
         if page.get("contact"):
             parts.append(f"<p>Public contact source: {link(page['contact']['source_url'], page['contact']['label'])}</p>")
         if page.get("draft"):
@@ -272,12 +289,15 @@ def render(data, summary, comparison=None):
     parts.append("<h2>Questions and rivals</h2>")
     for key, row in groups.items():
         parts.append(f"<h3>{escape(key)}</h3>")
-        parts.append(table(["Buyer question", "Usable", "Mentioned", "Recommended", "Site cited / known"],
-                           [[q["text"], row["questions"][q["id"]]["usable"],
-                             fraction(row["questions"][q["id"]], "mentioned"), fraction(row["questions"][q["id"]], "recommended"),
-                             fraction(row["questions"][q["id"]], "cited", "citation_known")] for q in data["questions"]]))
-        parts.append(table(["Rival", "Mentioned", "Recommended", "First"],
-                           [[name, fraction(r, "mentioned"), fraction(r, "recommended"), fraction(r, "first")] for name, r in row["rivals"].items()]))
+        question_rows = []
+        for q in data["questions"]:
+            question_rows.append([q["text"], data["brand"]["name"], *counts(row["questions"][q["id"]])])
+            question_rows.extend([q["text"], name, *counts(questions[q["id"]])]
+                                 for name, questions in row["rival_questions"].items())
+        parts.append(table(["Buyer question", "Brand", "Mentioned", "Recommended", "First", "Site cited / known"], question_rows))
+        if row["rivals"]:
+            parts.append(table(["Rival — all buyer questions", "Mentioned", "Recommended", "First", "Site cited / known"],
+                               [[name, *counts(r)] for name, r in row["rivals"].items()]))
         parts.append(f"<p>Separate by-name pass: {row['by_name']['usable']} usable / {row['by_name']['attempted']} attempted / {next(e['rounds'] for e in data['engines'] if e['id'] == key)} planned. "
                      f"Source pass: {row['source']['usable']} usable / {row['source']['attempted']} attempted / {len(data['questions']) if key == 'chatgpt' else 0} planned.</p>")
     parts.append("<h2>By-name fact checks</h2>")
@@ -289,6 +309,17 @@ def render(data, summary, comparison=None):
         if comparison["comparable"]:
             parts.append(table(["Engine", "Before recommended", "After recommended"],
                                [[key, fraction(comparison["before"]["engines"][key], "recommended"), fraction(row, "recommended")] for key, row in groups.items()]))
+            for key, row in groups.items():
+                parts.append(f"<h3>{escape(key)}: question movement (before → after)</h3>")
+                movements = []
+                previous = comparison["before"]["engines"][key]
+                for q in data["questions"]:
+                    for brand in [data["brand"], *data["rivals"]]:
+                        name = brand["name"]
+                        old = previous["questions"][q["id"]] if name == data["brand"]["name"] else previous["rival_questions"][name][q["id"]]
+                        new = row["questions"][q["id"]] if name == data["brand"]["name"] else row["rival_questions"][name][q["id"]]
+                        movements.append([q["text"], name, *[f"{left} → {right}" for left, right in zip(counts(old), counts(new))]])
+                parts.append(table(["Buyer question", "Brand", "Mentioned", "Recommended", "First", "Site cited / known"], movements))
         parts.append(f"<p>{escape(comparison['limit'])}</p>")
     for change in data.get("changes", []):
         parts.append(f"<p>{escape(change['date'])}: {escape(change['description'])}</p>")
@@ -298,7 +329,7 @@ def render(data, summary, comparison=None):
         {key: data[key] for key in COMPARE_FIELDS}, ensure_ascii=False, indent=2)) + "</pre></details>")
     parts.append(table(["Run ID", "Tool", "Charged USD"], [[r["run_id"], r["tool_id"], r["cost_usd"] if r["cost_usd"] is not None else "unknown"] for r in data["receipts"]]))
     for row in data["observations"]:
-        parts.append(f"<details><summary>{escape(row['engine'])} · {escape(row['phase'])} · {escape(row['question_id'])} · "
+        parts.append(f"<details id=\"observation-{escape(row['run_id'])}\"><summary>{escape(row['engine'])} · {escape(row['phase'])} · {escape(row['question_id'])} · "
                      f"round {row['round']} · {escape(row['status'])}</summary><pre>{escape(json.dumps(row, ensure_ascii=False, indent=2))}</pre></details>")
     return """<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; base-uri 'none'; form-action 'none'">

@@ -153,9 +153,49 @@ class ReportTests(unittest.TestCase):
         data["opportunities"] = [page]
         rendered = report.render(data, report.summarize(data))
         self.assertIn("gemini / buyer", rendered)
+        run_id = data["observations"][0]["run_id"]
+        self.assertIn(f'href="#observation-{run_id}"', rendered)
+        self.assertIn(f'<details id="observation-{run_id}">', rendered)
         page["url"] = "https://elsewhere.example/unrelated"
         with self.assertRaises(ValueError):
             report.summarize(data)
+
+    def test_question_movements_remain_visible_when_totals_cancel(self):
+        before = fixture()
+        after = copy.deepcopy(before)
+        for data, recommended_question in ((before, "q2"), (after, "q1")):
+            for row in data["observations"]:
+                if row["question_id"] != recommended_question:
+                    row["verdicts"][0]["recommendation_quote"] = None
+        comparison = report.compare(before, after)
+        self.assertTrue(comparison["comparable"])
+        self.assertEqual(comparison["before"]["engines"]["gemini"]["recommended"], 3)
+        self.assertEqual(comparison["after"]["engines"]["gemini"]["recommended"], 3)
+        rendered = report.render(after, report.summarize(after), comparison)
+        self.assertIn("<td>Which services suit a small team?</td><td>Example Co</td><td>3/3 → 3/3</td><td>0/3 → 3/3</td>", rendered)
+        self.assertIn("<td>How can I find suppliers?</td><td>Example Co</td><td>3/3 → 3/3</td><td>3/3 → 0/3</td>", rendered)
+
+    def test_rival_question_counts_include_first_and_owned_citations(self):
+        data = fixture()
+        row = data["observations"][0]
+        row["sources"].append({"url": "https://rival.example/about"})
+        row["verdicts"][1].update(recommendation_quote="Rival Co is another option.", first=True)
+        summary = report.summarize(data)
+        rival = summary["engines"]["gemini"]["rival_questions"]["Rival Co"]
+        self.assertEqual((rival["q1"]["first"], rival["q1"]["cited"], rival["q2"]["cited"]), (1, 1, 0))
+        rendered = report.render(data, summary)
+        self.assertIn("<td>Which services suit a small team?</td><td>Rival Co</td><td>3/3</td><td>1/3</td><td>1/3</td><td>1/3</td>", rendered)
+
+    def test_missing_secondary_passes_are_prominent_without_invalidating_buyer_comparison(self):
+        data = fixture()
+        summary = report.summarize(data)
+        self.assertFalse(summary["engines"]["chatgpt"]["flags"])
+        self.assertEqual(len(summary["engines"]["chatgpt"]["secondary_flags"]), 2)
+        self.assertTrue(report.compare(data, copy.deepcopy(data))["comparable"])
+        rendered = report.render(data, summary)
+        first_screen = rendered.split("<h2>Next actions")[0]
+        self.assertIn("By-name fact-check coverage incomplete: 0/3 usable", first_screen)
+        self.assertIn("Forced source-pass coverage incomplete: 0/2 usable", first_screen)
 
     def test_untrusted_html_and_urls_cannot_execute_in_report(self):
         data = fixture()

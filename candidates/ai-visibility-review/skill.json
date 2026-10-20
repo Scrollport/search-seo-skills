@@ -6,7 +6,7 @@
   "version": "4.0.0",
   "status": "draft",
   "customer_proven": false,
-  "summary": "Check how ChatGPT, Gemini and Google AI Mode answer buyer questions, find the pages shaping those answers, and turn the evidence into a prioritized action plan and repeatable recheck.",
+  "summary": "Check how ChatGPT, Gemini and Google AI Mode answer buyer questions, investigate the pages cited in those answers, and turn the evidence into a prioritized action plan and repeatable recheck.",
   "outcome": "Know where AI answers recommend you, who they recommend instead, which cited pages offer a realistic opportunity, and what to change or pitch next.",
   "boundary": "A small repeated sample of logged-out web answers in one market. Counts stay separate by engine and question; no invented rank, composite score or promise of improvement. Public research and drafts only; no site changes, outreach sends or recurring schedule.",
   "category": "search-seo",
@@ -53,7 +53,7 @@
       {
         "tool_id": "dataforseo.chatgpt-search",
         "required": true,
-        "purpose": "Ask ChatGPT each exact question, logged-out, with web search off for the counted answers and on for the source pass."
+        "purpose": "Ask ChatGPT each exact question, logged-out, without forcing web search for the counted answers and with forced search for the separate source pass."
       },
       {
         "tool_id": "serper.google-search",
@@ -63,7 +63,7 @@
       {
         "tool_id": "brightdata.web-scrape",
         "required": true,
-        "purpose": "Open the business's pages and the pages ChatGPT cites before building a fix on them."
+        "purpose": "Open the business's pages and the pages cited by each engine before building a fix on them."
       },
       {
         "tool_id": "firecrawl.web-scrape",
