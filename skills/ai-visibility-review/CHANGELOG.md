@@ -1,5 +1,18 @@
 # Changelog
 
+## 4.0.0 — 2026-10-20
+
+- Extend the existing AI visibility outcome across ChatGPT, Gemini and Google
+  AI Mode with a fixed, repeated sample and engine-specific counts.
+- Add checked citation opportunities, public contact provenance, outreach
+  drafts and practical rechecks.
+- Add deterministic private HTML/CSV reporting, checkpoint validation and
+  comparison guards. No automatic API calls, outreach or scheduling.
+- Verified with a complete baseline/recheck rehearsal, accepted production
+  Admin Tests and a complete report using production consumer runs.
+  Preserve the distinction between method rehearsal, production qualification
+  and external customer proof.
+
 > Git history and GitHub releases are the canonical change record.
 
 ## 3.0.0 — 2026-10-14

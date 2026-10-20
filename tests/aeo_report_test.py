@@ -8,7 +8,7 @@ import unittest
 from uuid import uuid4
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "candidates/ai-visibility-review/scripts/report.py"
+SCRIPT = ROOT / "skills/ai-visibility-review/scripts/report.py"
 spec = importlib.util.spec_from_file_location("report", SCRIPT)
 report = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(report)

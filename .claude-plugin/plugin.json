@@ -1,8 +1,8 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "search-seo-skills",
-  "description": "Verified Next SEO Moves, Article Brief + Draft and ChatGPT Recommendation Check Skills powered by Scrollport.",
-  "version": "5.0.1",
+  "description": "Verified Next SEO Moves, Article Brief + Draft and AI Visibility and Citation Plan Skills powered by Scrollport.",
+  "version": "6.0.0",
   "author": {
     "name": "Scrollport"
   },
