@@ -4,6 +4,9 @@ Save one private JSON object. The renderer validates it without calling any API.
 Keep unresolved run IDs and idempotency keys in a separate private recovery
 file; the report accepts only terminal observations and receipts. Never omit
 their reserved spend from your execution budget.
+Only the fields described here are allowed, including nested objects. Unknown
+metadata is rejected before any portable files are written. Keep raw supplier
+responses, routing, credentials and billing envelopes in separate private files.
 
 Top-level fields:
 
@@ -18,7 +21,11 @@ Top-level fields:
   `surface` is `logged_out_web`; `settings` records all exact request settings
   except prompt, including country and language representation and whether web
   search is forced. A deliberately reduced approved plan can use fewer engines
-  or questions but must be labelled in `scope_note`.
+  or questions but must be labelled in `scope_note`. The renderer also flags
+  missing core engines, fewer than five questions or fewer than three rounds
+  independently of that note. Comparisons then describe only the reduced plan.
+  Supported settings are `location_name`, `language_name`, `force_web_search`
+  for ChatGPT; `country` for Gemini; and `gl`, `hl` for Google AI Mode.
 - `approved_max_usd`: decimal string for the whole core plan's approved
   customer-wallet ceiling. For a retrospective import where no aggregate wallet
   ceiling was recorded, use null and explain the original authority in a

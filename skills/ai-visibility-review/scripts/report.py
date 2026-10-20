@@ -16,6 +16,8 @@ TOOLS = {"chatgpt": "dataforseo.chatgpt-search", "gemini": "cloro.gemini-search"
          "google_ai_mode": "cloro.google-ai-mode"}
 COMPARE_FIELDS = ("schema_version", "method", "brand", "rivals", "market",
                   "questions", "by_name_question", "engines")
+SETTINGS = {"chatgpt": "location_name language_name force_web_search",
+            "gemini": "country", "google_ai_mode": "gl hl"}
 
 
 def require(condition, message):
@@ -25,6 +27,11 @@ def require(condition, message):
 
 def nonempty(value):
     return isinstance(value, str) and bool(value.strip())
+
+
+def fields(value, allowed, label):
+    require(isinstance(value, dict), f"{label} must be an object")
+    require(not set(value).difference(allowed.split()), f"Undeclared fields in {label}; keep raw metadata outside the checkpoint")
 
 
 def money(value):
@@ -67,39 +74,51 @@ def timestamp(value):
 
 
 def validate(data):
+    fields(data, "schema_version method brand rivals market questions by_name_question engines "
+           "approved_max_usd budget_note scope_note observations receipts opportunities by_name_findings changes", "checkpoint")
     require(data.get("schema_version") == 1 and data.get("method") == "aeo-v4",
             "Use the aeo-v4 checkpoint contract")
     require(nonempty(data.get("scope_note")), "Explain the scope and omissions")
     require(nonempty(data.get("market", {}).get("country"))
             and nonempty(data.get("market", {}).get("language")), "Market is required")
     require(nonempty(data.get("by_name_question")), "By-name prompt is required")
+    fields(data["market"], "country language", "market")
     brands = [data["brand"], *data["rivals"]]
     names = [b["name"] for b in brands]
     require(len(names) == len(set(names)) and all(nonempty(n) for n in names), "Brand names must be unique")
     for brand in brands:
+        fields(brand, "name domains aliases", "brand")
         require(isinstance(brand.get("aliases"), list) and all(nonempty(a) for a in brand["aliases"]),
                 "Declare brand aliases, even if empty")
         require(isinstance(brand.get("domains"), list) and brand["domains"], "Declare owned domains")
         for domain in brand["domains"]:
             require(isinstance(domain, str) and "/" not in domain and ":" not in domain, "Use bare domains")
             public_url("https://" + domain)
+    for question in data["questions"]:
+        fields(question, "id text", "question")
     questions = {q["id"]: q["text"] for q in data["questions"]}
     require(1 <= len(questions) <= 5 and len(questions) == len(data["questions"])
             and all(nonempty(k) and nonempty(v) for k, v in questions.items()), "Invalid buyer questions")
     engines = {e["id"]: e for e in data["engines"]}
     require(engines and len(engines) == len(data["engines"]), "Unique engines required")
     for key, engine in engines.items():
+        fields(engine, "id tool_id surface settings rounds", "engine")
         require(key in TOOLS and engine.get("tool_id") == TOOLS[key]
                 and engine.get("surface") == "logged_out_web", "Unsupported engine/tool/surface")
         require(type(engine.get("rounds")) is int and 2 <= engine["rounds"] <= 5, "Use two to five rounds")
         require(isinstance(engine.get("settings"), dict) and engine["settings"], "Exact settings required")
+        fields(engine["settings"], SETTINGS[key], "engine settings")
+        require(all(type(value) is bool if setting == "force_web_search" else nonempty(value)
+                    for setting, value in engine["settings"].items()), "Settings must use the declared scalar types")
         if key == "chatgpt":
             require(engine["settings"].get("force_web_search") is False, "Buyer ChatGPT web search must not be forced")
     cap = money(data["approved_max_usd"]) if data["approved_max_usd"] is not None else None
+    require(data.get("budget_note") is None or isinstance(data["budget_note"], str), "Budget note must be text")
     if cap is None:
         require(nonempty(data.get("budget_note")), "An unrecorded wallet ceiling needs a budget explanation")
     receipts = {}
     for receipt in data["receipts"]:
+        fields(receipt, "run_id tool_id cost_usd", "receipt")
         run_id = receipt["run_id"]
         UUID(run_id)
         require(run_id not in receipts and nonempty(receipt.get("tool_id")), "Duplicate or invalid receipt")
@@ -108,6 +127,8 @@ def validate(data):
         receipts[run_id] = receipt
     slots, observed = set(), {}
     for row in data["observations"]:
+        fields(row, "run_id engine phase question_id round requested_prompt requested_settings status reason "
+               "retrieved_at model answer sources reviewed verdicts", "observation")
         run_id, engine, phase = row["run_id"], row["engine"], row["phase"]
         require(run_id not in observed and engine in engines and phase in ("buyer", "by_name", "source"),
                 "Duplicate run or unknown engine/phase")
@@ -123,6 +144,18 @@ def validate(data):
             expected_settings["force_web_search"] = True
         require(row.get("requested_settings") == expected_settings,
                 "Actual request settings do not match the saved measurement plan")
+        require(all(row.get(key) is None or isinstance(row[key], str) for key in ("answer", "reason")),
+                "Answer and reason must be text")
+        require("reviewed" not in row or type(row["reviewed"]) is bool, "Reviewed must be boolean")
+        for source in row.get("sources") or []:
+            fields(source, "url title", "source")
+            public_url(source["url"])
+            require(source.get("title") is None or isinstance(source["title"], str), "Source title must be text")
+        for verdict in row.get("verdicts") or []:
+            fields(verdict, "brand mention_quote recommendation_quote first", "verdict")
+            require(nonempty(verdict.get("brand")) and type(verdict.get("first")) is bool
+                    and all(verdict.get(key) is None or isinstance(verdict[key], str)
+                            for key in ("mention_quote", "recommendation_quote")), "Invalid verdict scalar fields")
         slot = (engine, phase, row["question_id"], row["round"])
         require(slot not in slots, "Duplicate observation slot; do not hide a failed attempt")
         slots.add(slot)
@@ -152,6 +185,8 @@ def validate(data):
             require(nonempty(row.get("reason")), "Unusable observations need an explanation")
         observed[run_id] = row
     for page in data.get("opportunities", []):
+        fields(page, "url kind opened_at excerpt gap action owner effort recheck observation_ids contact draft", "opportunity")
+        require(page.get("draft") is None or isinstance(page["draft"], str), "Draft must be text")
         url = public_url(page["url"])
         timestamp(page["opened_at"])
         require(all(nonempty(page.get(k)) for k in ("excerpt", "gap", "action", "owner", "effort", "recheck")),
@@ -167,14 +202,17 @@ def validate(data):
                 require(canonical_url(url) in {canonical_url(s["url"]) for s in observed[run_id]["sources"] or []},
                         "Third-party opportunity was not cited by its supporting observation")
         if page.get("contact"):
+            fields(page["contact"], "label source_url", "contact")
             require(nonempty(page["contact"].get("label")), "Contact label required")
             public_url(page["contact"]["source_url"])
     for finding in data.get("by_name_findings", []):
+        fields(finding, "engine quote fact source_url", "by-name finding")
         require(nonempty(finding.get("fact")) and nonempty(finding.get("quote")), "Finding requires quote and verified fact")
         require(owns(finding["source_url"], data["brand"]["domains"]), "Fact check needs an official page")
         require(any(r["engine"] == finding["engine"] and r["phase"] == "by_name" and r["status"] == "ok"
                     and finding["quote"] in r["answer"] for r in observed.values()), "By-name finding lacks a grounded quote")
     for change in data.get("changes", []):
+        fields(change, "date description url", "change")
         require(nonempty(change.get("date")) and nonempty(change.get("description")), "Describe and date each change")
         if change.get("url"):
             public_url(change["url"])
@@ -196,6 +234,15 @@ def tally(rows, brand):
 def summarize(data):
     validate(data)
     groups = {}
+    plan_limitations = []
+    missing_engines = sorted(set(TOOLS).difference(e["id"] for e in data["engines"]))
+    if missing_engines:
+        plan_limitations.append("Missing core engines: " + ", ".join(missing_engines))
+    if len(data["questions"]) < 5:
+        plan_limitations.append(f"Reduced buyer questions: {len(data['questions'])}/5")
+    for engine in data["engines"]:
+        if engine["rounds"] < 3:
+            plan_limitations.append(f"{engine['id']}: reduced rounds {engine['rounds']}/3")
     for engine in data["engines"]:
         key = engine["id"]
         rows = [r for r in data["observations"] if r["engine"] == key and r["phase"] == "buyer"]
@@ -224,7 +271,7 @@ def summarize(data):
                            for q in data["questions"]} for b in data["rivals"]},
                        "by_name": by_name, "source": source}
     total = sum((money(r["cost_usd"]) for r in data["receipts"] if r["cost_usd"] is not None), Decimal(0))
-    return {"engines": groups, "known_cost_usd": format(total, ".6f"),
+    return {"engines": groups, "plan_limitations": plan_limitations, "known_cost_usd": format(total, ".6f"),
             "unknown_cost_receipts": sum(r["cost_usd"] is None for r in data["receipts"])}
 
 
@@ -239,11 +286,13 @@ def compare(before, after):
             reasons.append(f"{key}: incomplete coverage or mixed models")
         if previous["models"] != current["models"]:
             reasons.append(f"{key}: observed model disclosure/version changed")
+    scope = "Comparison is limited to the declared reduced plan. " if left["plan_limitations"] or right["plan_limitations"] else ""
     return {"comparable": not reasons, "reasons": reasons, "before": left, "after": right,
-            "limit": "Comparison covers buyer answers only; by-name and source-pass coverage is separate. Matched request settings do not control unknown model versions. Before/after movement is not proof of causation."}
+            "limit": scope + "Comparison covers buyer answers only; by-name and source-pass coverage is separate. Matched request settings do not control unknown model versions. Before/after movement is not proof of causation."}
 
 
 def render(data, summary, comparison=None):
+    validate(data)
     escape = lambda value: html.escape(str(value), quote=True)
     def link(url, label=None):
         return f'<a href="{escape(public_url(url))}" rel="noreferrer">{escape(label or url)}</a>'
@@ -259,11 +308,15 @@ def render(data, summary, comparison=None):
              f"<p>{escape(data['market']['country'])} · {escape(data['market']['language'])} · {escape(data['scope_note'])}</p>",
              "<p>Counts from a small repeated sample. Engines are separate; missing citations are not zero. Nothing has been sent or published.</p>"]
     groups = summary["engines"]
+    if summary["plan_limitations"]:
+        parts.append("<p><strong>Core plan incomplete:</strong> " + escape("; ".join(summary["plan_limitations"]))
+                     + ". Counts and comparisons describe only the declared reduced plan.</p>")
     parts.append(table(["Engine", "Usable / attempted / planned", "Mentioned", "Recommended", "First", "Site cited / known"],
                        [[key, f"{r['usable']} / {r['attempted']} / {r['planned']}", fraction(r, "mentioned"),
                          fraction(r, "recommended"), fraction(r, "first"), fraction(r, "cited", "citation_known")] for key, r in groups.items()]))
     for key, row in groups.items():
-        parts.append(f"<p><strong>{escape(key)}</strong>: {escape('; '.join(row['flags']) or 'Buyer coverage sufficient for a descriptive comparison')}. "
+        coverage = "Buyer coverage sufficient within the declared reduced plan" if summary["plan_limitations"] else "Buyer coverage sufficient for a descriptive comparison"
+        parts.append(f"<p><strong>{escape(key)}</strong>: {escape('; '.join(row['flags']) or coverage)}. "
                      f"Model: {escape(', '.join(row['models']) or 'not reported')}{'; some versions unknown' if row['model_unknown'] else ''}.</p>")
         if row["secondary_flags"]:
             parts.append(f"<p><strong>Incomplete workflow — {escape(key)}:</strong> {escape('; '.join(row['secondary_flags']))}. "

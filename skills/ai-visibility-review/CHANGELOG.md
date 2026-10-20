@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.0.1 — 2026-10-20
+
+- Reject undeclared checkpoint fields and nested metadata before writing portable reports.
+- Flag reduced engine, question or round coverage independently of the free-form scope note.
+- Re-render the retained qualification evidence without additional paid calls.
+
 ## 4.0.0 — 2026-10-20
 
 - Extend the existing AI visibility outcome across ChatGPT, Gemini and Google
