@@ -19,11 +19,12 @@ two added tools and the complete workflow have qualified.
 1. Get the website, country and language. Use existing context before asking.
    Confirm the business name, aliases, owned domains, actual offer and up to
    three relevant rivals. Never confuse a common brand word with that business.
-2. Before any paid call, use `inspect_tool` to verify every required tool is
-   live, inspect current schemas and prices, and use `get_wallet`. Obtain a
+2. Before any paid call, use `search_tools` to discover each required intent,
+   then `inspect_tool` to verify the chosen tools are live and inspect their
+   current schemas and prices. Use `get_wallet`. The IDs below are the currently
+   validated routes, not a substitute for discovery. Obtain a
    small initial page-research allowance or include it in an already approved
-   total. Free tool inspection is not a run. Use `search_tools` only to resolve
-   unavailable IDs or optional research; do not silently switch engine or
+   total. Free discovery and inspection are not runs. Do not silently switch engine or
    replace observed web answers with an LLM API.
 3. Read the business's public home/product pages using
    `brightdata.web-scrape`; use `firecrawl.web-scrape` once for an empty or

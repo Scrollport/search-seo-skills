@@ -50,6 +50,20 @@ def fixture():
 
 
 class ReportTests(unittest.TestCase):
+    def test_retrospective_costs_do_not_invent_a_customer_wallet_approval(self):
+        data = fixture()
+        data["approved_max_usd"] = None
+        with self.assertRaises(ValueError):
+            report.summarize(data)
+        data["budget_note"] = "Internal qualification had a separate $1 wholesale allowance, not a retail ceiling."
+        rendered = report.render(data, report.summarize(data))
+        self.assertIn("no aggregate customer-wallet ceiling was recorded", rendered)
+        self.assertIn(data["budget_note"], rendered)
+        self.assertNotIn("of $None", rendered)
+        data["approved_max_usd"] = "0.001000"
+        with self.assertRaises(ValueError):
+            report.summarize(data)
+
     def test_failure_missing_and_unknown_citations_are_not_negative_recommendations(self):
         data = fixture()
         data["observations"][0].update(status="failed", reason="Provider timeout")

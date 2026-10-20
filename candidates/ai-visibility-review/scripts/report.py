@@ -95,7 +95,9 @@ def validate(data):
         require(isinstance(engine.get("settings"), dict) and engine["settings"], "Exact settings required")
         if key == "chatgpt":
             require(engine["settings"].get("force_web_search") is False, "Buyer ChatGPT web search must not be forced")
-    cap = money(data["approved_max_usd"])
+    cap = money(data["approved_max_usd"]) if data["approved_max_usd"] is not None else None
+    if cap is None:
+        require(nonempty(data.get("budget_note")), "An unrecorded wallet ceiling needs a budget explanation")
     receipts = {}
     for receipt in data["receipts"]:
         run_id = receipt["run_id"]
@@ -177,7 +179,7 @@ def validate(data):
         if change.get("url"):
             public_url(change["url"])
     spent = sum((money(r["cost_usd"]) for r in receipts.values() if r["cost_usd"] is not None), Decimal(0))
-    require(spent <= cap, "Recorded spend exceeds approved maximum; reconcile before reporting")
+    require(cap is None or spent <= cap, "Recorded spend exceeds approved maximum; reconcile before reporting")
     return data
 
 
@@ -323,8 +325,12 @@ def render(data, summary, comparison=None):
         parts.append(f"<p>{escape(comparison['limit'])}</p>")
     for change in data.get("changes", []):
         parts.append(f"<p>{escape(change['date'])}: {escape(change['description'])}</p>")
-    parts.append(f"<h2>Receipts and evidence</h2><p>Known charged total ${summary['known_cost_usd']} of ${escape(data['approved_max_usd'])}; "
+    ceiling = (f" of ${escape(data['approved_max_usd'])} approved" if data["approved_max_usd"] is not None
+               else "; no aggregate customer-wallet ceiling was recorded")
+    parts.append(f"<h2>Receipts and evidence</h2><p>Known charged total ${summary['known_cost_usd']}{ceiling}; "
                  f"{summary['unknown_cost_receipts']} receipts have unknown cost.</p>")
+    if data.get("budget_note"):
+        parts.append(f"<p>{escape(data['budget_note'])}</p>")
     parts.append("<details><summary>Exact plan and requested settings</summary><pre>" + escape(json.dumps(
         {key: data[key] for key in COMPARE_FIELDS}, ensure_ascii=False, indent=2)) + "</pre></details>")
     parts.append(table(["Run ID", "Tool", "Charged USD"], [[r["run_id"], r["tool_id"], r["cost_usd"] if r["cost_usd"] is not None else "unknown"] for r in data["receipts"]]))

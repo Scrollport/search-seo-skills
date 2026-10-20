@@ -19,7 +19,12 @@ Top-level fields:
   except prompt, including country and language representation and whether web
   search is forced. A deliberately reduced approved plan can use fewer engines
   or questions but must be labelled in `scope_note`.
-- `approved_max_usd`: decimal string for the whole core plan.
+- `approved_max_usd`: decimal string for the whole core plan's approved
+  customer-wallet ceiling. For a retrospective import where no aggregate wallet
+  ceiling was recorded, use null and explain the original authority in a
+  nonempty `budget_note`. Do not substitute a wholesale test allowance.
+  This reporting exception never authorizes a new call; a new execution still
+  requires the bounded estimate and approvals in the runtime instructions.
 - `scope_note`: human-readable scope and any omissions.
 - `observations`: terminal records below; absent planned slots remain missing.
 - `receipts`: one `{run_id, tool_id, cost_usd}` per paid research/observation run,
