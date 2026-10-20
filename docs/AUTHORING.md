@@ -35,6 +35,15 @@ independent external user obtains the promised outcome. Degraded dependencies,
 an overdue review or a materially unreliable result return the Skill to a
 withheld state until reverification.
 
+For a substantial replacement of a currently verified Skill, keep the accepted
+release under `skills/` and stage the same ID under `candidates/`, using
+`DRAFT.md` and null verification dates. Register it in the optional
+`draft_revisions` array, not as a second outcome in `skills`. Validation checks
+the revision; exports deliberately ignore it. Once a fresh complete rehearsal
+passes, replace the existing release, remove the draft revision entry/directory
+and record new evidence. This prevents pending work from withdrawing a working
+Skill or inheriting verification for steps it has never run.
+
 The `version` in each GitHub `skill.json` is the sole editable semantic-version
 authority. `SKILL.md` frontmatter does not repeat it. An exact Git commit or
 release tag pins the complete package state, while Git history and GitHub

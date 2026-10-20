@@ -243,6 +243,22 @@ export function checkRepository(rootPath, { now = new Date() } = {}) {
     seen.add(entry.id);
     validateManifest(root, entry, errors, now, registry.repository, withheld);
   }
+  // Stage a replacement without withdrawing the current verified release or
+  // claiming its old rehearsal proves newly added dependencies and steps.
+  const revisions = registry.draft_revisions ?? [];
+  if (!Array.isArray(revisions)) errors.push("registry: draft_revisions must be an array");
+  const revisionIds = new Set();
+  for (const entry of Array.isArray(revisions) ? revisions : []) {
+    if (revisionIds.has(entry.id)) errors.push(`registry: duplicate draft revision ${entry.id}`);
+    revisionIds.add(entry.id);
+    if (!registry.skills.some((skill) => skill.id === entry.id && skill.status === "verified")) {
+      errors.push(`${entry.id}: draft revision requires an existing verified Skill`);
+    }
+    if (entry.status !== "draft" || entry.customer_proven !== false) {
+      errors.push(`${entry.id}: pending revisions must remain unverified drafts`);
+    }
+    validateManifest(root, entry, errors, now, registry.repository, withheld);
+  }
 
   for (const file of listFiles(root)) {
     const rel = relative(root, file);
@@ -250,7 +266,7 @@ export function checkRepository(rootPath, { now = new Date() } = {}) {
       errors.push(`${rel}: candidates cannot be client-discoverable`);
     }
     if (file.endsWith(".md")) validateLinks(file, root, errors);
-    if (/\.(?:md|json|ya?ml|mjs|js|ts|tsx|sh)$/i.test(file)) {
+    if (/\.(?:md|json|ya?ml|mjs|js|ts|tsx|sh|py)$/i.test(file)) {
       const text = readFileSync(file, "utf8");
       for (const [pattern, label] of SECRET_PATTERNS) {
         pattern.lastIndex = 0;

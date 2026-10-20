@@ -13,7 +13,7 @@ maximum cost and waits for your yes before it spends anything.
 | --- | --- | --- |
 | Decide which pages to fix or write next | [Next SEO Moves](skills/seo-opportunity-map/SKILL.md) (`seo-opportunity-map`) | Your next five SEO moves: which page to fix or write, the exact edit, and why |
 | Write one article that can rank | [Article Brief + Draft](skills/seo-content-brief/SKILL.md) (`seo-content-brief`) | A winnable angle for one topic, a cited brief and a first draft to edit |
-| See how often ChatGPT recommends you when buyers ask, and who it names instead | [ChatGPT Recommendation Check](skills/ai-visibility-review/SKILL.md) (`ai-visibility-review`) | A one-screen scorecard from 25 buyer answers, the pages ChatGPT used and three fixes to test |
+| See whether AI answers recommend you and what to change next | [AI Visibility and Citation Plan](skills/ai-visibility-review/SKILL.md) (`ai-visibility-review`) | Separate ChatGPT, Gemini and Google AI Mode counts from 45 buyer answers, checked citation opportunities, three actions and a repeatable recheck |
 
 The first two work together: every new page in Next SEO Moves ends with "Brief
 this page", which hands its keyword, results page and rivals to Article Brief +
@@ -25,7 +25,7 @@ discovery selects the relevant outcome Skill for each request.
 ## Inspect the proof before installing
 
 - [Latest Next SEO Moves verification](skills/seo-opportunity-map/evidence/2026-10-14-verification.md): version 5.1.1 on two public sites. A large scheduling platform tested sample cleaning, striking-distance updates and dated positions; a site that ranks for 17 phrases tested the rivals'-gap path and the new-page hand-off to Article Brief + Draft. About $0.26 a run.
-- [Latest ChatGPT Recommendation Check verification](skills/ai-visibility-review/evidence/2026-10-14-verification.md): version 3.0.0 on a privacy-focused analytics product. 33 separate ChatGPT answers (25 buyer answers, 3 by name, 5 source-pass), none failed or collapsed, a scorecard with plain-English ranges and three fixes built on opened pages. Spend $0.214500.
+- [Latest AI Visibility and Citation Plan verification](skills/ai-visibility-review/evidence/2026-10-20-rehearsal.md): version 4.0.0 on Scrollport's public website. A complete production report with 45 buyer answers, nine by-name checks, five separate source checks and four page reads. The sampled engines did not recommend Scrollport: 0/15 each. The report turns that finding into checked actions, with portable HTML, CSV and JSON. Actual wallet charges were $0.264400; the earlier baseline/recheck rehearsal separately verified comparison and recovery.
 - [Latest Article Brief + Draft verification](skills/seo-content-brief/evidence/2026-10-14-verification.md): version 4.1.0 on a US topic whose seed phrase Google reads as CPU scheduling. Ideas were filtered to the topic, the target was re-picked once, and the site search found existing pages, so the brief and a cited first draft update the site's sales-specific page instead of adding another. Spend $0.114500.
 
 Earlier public synthetic examples from August 2026 remain available for

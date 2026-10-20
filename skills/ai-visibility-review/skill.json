@@ -2,19 +2,21 @@
   "$schema": "../../skill.schema.json",
   "schema_version": 2,
   "id": "ai-visibility-review",
-  "title": "ChatGPT Recommendation Check",
-  "version": "3.0.0",
+  "title": "AI Visibility and Citation Plan",
+  "version": "4.0.0",
   "status": "verified",
   "customer_proven": false,
-  "summary": "Ask ChatGPT the questions your buyers ask, count how often it recommends you and who it names instead, see which pages it relies on, and get three fixes to test.",
-  "outcome": "See how often ChatGPT recommends you when buyers ask, who it names instead, and three fixes to test, for about $0.20 a run.",
-  "boundary": "ChatGPT only: logged-out answers for one country and language. Google AI, Gemini, Claude and Perplexity are not checked. Results are counts from a small sample, never a rank or a single score; no fix is promised to work; nothing is published, changed on your site or sent to anyone.",
+  "summary": "Check how ChatGPT, Gemini and Google AI Mode answer buyer questions, investigate the pages cited in those answers, and turn the evidence into a prioritized action plan and repeatable recheck.",
+  "outcome": "Know where AI answers recommend you, who they recommend instead, which cited pages offer a realistic opportunity, and what to change or pitch next.",
+  "boundary": "A small repeated sample of logged-out web answers in one market. Counts stay separate by engine and question; no invented rank, composite score or promise of improvement. Public research and drafts only; no site changes, outreach sends or recurring schedule.",
   "category": "search-seo",
   "capabilities": [
     {
       "id": "ai-search-visibility",
       "tool_ids": [
-        "dataforseo.chatgpt-search"
+        "dataforseo.chatgpt-search",
+        "cloro.gemini-search",
+        "cloro.google-ai-mode"
       ]
     },
     {
@@ -45,14 +47,13 @@
       "inspect_tool",
       "run_tool",
       "get_run",
-      "list_apps",
       "get_wallet"
     ],
     "catalog_tools": [
       {
         "tool_id": "dataforseo.chatgpt-search",
         "required": true,
-        "purpose": "Ask ChatGPT each exact question, logged-out, with web search off for the counted answers and on for the source pass."
+        "purpose": "Ask ChatGPT each exact question, logged-out, without forcing web search for the counted answers and with forced search for the separate source pass."
       },
       {
         "tool_id": "serper.google-search",
@@ -62,48 +63,58 @@
       {
         "tool_id": "brightdata.web-scrape",
         "required": true,
-        "purpose": "Open the business's pages and the pages ChatGPT cites before building a fix on them."
+        "purpose": "Open the business's pages and the pages cited by each engine before building a fix on them."
       },
       {
         "tool_id": "firecrawl.web-scrape",
         "required": false,
         "purpose": "Re-read a page once when the first read comes back empty or as navigation only."
+      },
+      {
+        "tool_id": "cloro.gemini-search",
+        "required": true,
+        "purpose": "Observe repeated Gemini web answers and available citations for the exact approved prompts and country."
+      },
+      {
+        "tool_id": "cloro.google-ai-mode",
+        "required": true,
+        "purpose": "Observe repeated Google AI Mode web answers and available citations for the exact approved prompts, country and interface language."
       }
     ],
     "connected_apps": []
   },
   "inputs": [
-    "Your website address",
-    "Your market: country and language",
-    "Five of eight buyer questions the agent drafts for you; none names your brand"
+    "Website and target market (country and language)",
+    "Five approved natural buyer questions, brand aliases/domains and up to three rivals",
+    "Approved budget; optional previous checkpoint and list of changes since the baseline"
   ],
   "outputs": [
-    "A one-screen scorecard: how often ChatGPT mentions, recommends and cites you in 25 buyer answers, in plain English",
-    "Whether ChatGPT gets your facts right when asked about you by name (3 answers)",
-    "Who ChatGPT names instead and the pages it used, with counts and exact links",
-    "Three fixes to test this week: improve your own pages and get onto the pages ChatGPT cites for rivals",
-    "A retest date, with receipts and limits in a Details section at the end"
+    "Separate engine scorecards with exact mention, recommendation and citation counts and failed/missing coverage",
+    "Checked citation opportunities and up to three prioritized page fixes or outreach drafts",
+    "By-name accuracy check and a dated, like-for-like recheck plan",
+    "Private portable HTML report, CSV observations and JSON checkpoint with run receipts"
   ],
   "cost": {
     "currency": "USD",
-    "model": "33 ChatGPT answers and about 10 page checks, priced per call.",
+    "model": "45 buyer answers, nine by-name answers, five ChatGPT source-pass answers; up to 12 page reads, four fallback reads and two searches. Optional enrichment is separately quoted.",
     "trial_safe_max_usd": "0.500000",
-    "notes": "Re-inspect before each run. At 14 October 2026 prices ($0.005600 an answer, $0.003300 a page check, $0.002500 a re-read or search) a check costs about $0.217800 and at most $0.260800 with spare answers, re-reads and searches; stop and ask above $0.50. A weekly re-check costs about $0.20."
+    "notes": "Inspect actual current prices before approving. Expected core cost about $0.30, excluding the host agent model; reserve at most $0.50 for the bounded plan. Missing tools or an unaffordable plan stop before paid work. A plan with fewer engines is explicitly labelled, never silently substituted."
   },
   "approvals": [
-    "Approve the market, the five ticked questions and the stated maximum before the first paid call",
-    "Pause for a server confirmation request, a higher maximum after re-inspection, or any change to the questions or market",
-    "A weekly re-check needs the user's yes for the same questions and maximum",
-    "No publishing, website changes or contact with third parties"
+    "Confirm questions, market, engines, sample plan and maximum before paid work; reuse explicit authorization for that exact plan",
+    "Recover existing run IDs before retrying; changes to scope, cost ceiling, engine or sampling plan require agreement",
+    "Optional enrichment requires its own inspected estimate within an approved budget",
+    "No outreach, website edits, publishing or recurring rechecks without separate authorization"
   ],
   "compatibility": [
-    "Agent Skills compatible host",
-    "One authorized Scrollport connection with apps, discover, inspect, run and wallet",
-    "A local file or conversation state for the saved check and next week's comparison"
+    "Agent Skills compatible host with an authorized Scrollport connection",
+    "Local private checkpoint files; Python 3 standard library for the optional deterministic HTML/CSV renderer",
+    "A Markdown report is available when the host cannot run local scripts"
   ],
   "evidence": {
-    "verified_at": "2026-10-14",
-    "review_due_at": "2026-11-13",
-    "summary_path": "evidence/2026-10-14-verification.md"
-  }
+    "verified_at": "2026-10-20",
+    "review_due_at": "2026-11-19",
+    "summary_path": "evidence/2026-10-20-rehearsal.md"
+  },
+  "changelog_path": "CHANGELOG.md"
 }

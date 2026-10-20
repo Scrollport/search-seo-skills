@@ -143,18 +143,20 @@ test("Rival Watch reports only what its tools return: top 10 positions and whole
   assert(draft.includes("100,000 characters"), "a cut-off sitemap must fall back to the site-map tool");
 });
 
-test("the ChatGPT check keeps its id, scope, honest run time and repeat rules", () => {
+test("AI visibility retains its id, separates engines and distinguishes repeats from recovery", () => {
   const dir = join(root, "skills", "ai-visibility-review");
   const manifest = JSON.parse(readFileSync(join(dir, "skill.json"), "utf8"));
   const instructions = readFileSync(join(dir, "SKILL.md"), "utf8");
   assert.equal(manifest.id, "ai-visibility-review");
-  assert.equal(manifest.title, "ChatGPT Recommendation Check");
-  assert(instructions.includes("Not checked: Google AI, Gemini, Claude, Perplexity"));
-  assert(instructions.includes("20–30 minutes") && !instructions.includes("5–15 minutes"), "state the verified run time");
-  assert(instructions.includes("listed first"), "the scorecard reports how often the brand is listed first");
-  assert(instructions.includes("--input @<file> --new"), "intentional repeats must start new paid runs");
-  assert(instructions.includes("without `--new`"), "a retry after a lost response must reuse the saved run");
-  assert(instructions.includes("force_web_search false"), "counted answers must not force web search");
+  assert.equal(manifest.title, "AI Visibility and Citation Plan");
+  for (const tool of ["dataforseo.chatgpt-search", "cloro.gemini-search", "cloro.google-ai-mode"]) {
+    assert(manifest.dependencies.catalog_tools.some((row) => row.tool_id === tool && row.required));
+    assert(instructions.includes(tool));
+  }
+  assert(instructions.includes("at most one per engine"));
+  assert(instructions.includes("Round 2 is intentionally a new sample"));
+  assert(instructions.includes("that same key"));
+  assert(instructions.includes("force_web_search: false"));
 });
 
 test("renamed SEO Skills retain the former public ids as aliases", () => {
