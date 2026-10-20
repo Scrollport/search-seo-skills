@@ -27,5 +27,13 @@
       "status": "draft",
       "customer_proven": false
     }
+  ],
+  "draft_revisions": [
+    {
+      "id": "ai-visibility-review",
+      "path": "candidates/ai-visibility-review",
+      "status": "draft",
+      "customer_proven": false
+    }
   ]
 }

@@ -1,0 +1,120 @@
+{
+  "$schema": "../../skill.schema.json",
+  "schema_version": 2,
+  "id": "ai-visibility-review",
+  "title": "AI Visibility and Citation Plan",
+  "version": "4.0.0",
+  "status": "draft",
+  "customer_proven": false,
+  "summary": "Check how ChatGPT, Gemini and Google AI Mode answer buyer questions, find the pages shaping those answers, and turn the evidence into a prioritized action plan and repeatable recheck.",
+  "outcome": "Know where AI answers recommend you, who they recommend instead, which cited pages offer a realistic opportunity, and what to change or pitch next.",
+  "boundary": "A small repeated sample of logged-out web answers in one market. Counts stay separate by engine and question; no invented rank, composite score or promise of improvement. Public research and drafts only; no site changes, outreach sends or recurring schedule.",
+  "category": "search-seo",
+  "capabilities": [
+    {
+      "id": "ai-search-visibility",
+      "tool_ids": [
+        "dataforseo.chatgpt-search",
+        "cloro.gemini-search",
+        "cloro.google-ai-mode"
+      ]
+    },
+    {
+      "id": "web-search",
+      "tool_ids": [
+        "serper.google-search"
+      ]
+    },
+    {
+      "id": "website-content-extraction",
+      "tool_ids": [
+        "brightdata.web-scrape"
+      ]
+    },
+    {
+      "id": "web-page-extraction",
+      "tool_ids": [
+        "firecrawl.web-scrape"
+      ]
+    }
+  ],
+  "aliases": [],
+  "license": "MIT",
+  "instruction_path": "DRAFT.md",
+  "dependencies": {
+    "scrollport_control_tools": [
+      "search_tools",
+      "inspect_tool",
+      "run_tool",
+      "get_run",
+      "get_wallet"
+    ],
+    "catalog_tools": [
+      {
+        "tool_id": "dataforseo.chatgpt-search",
+        "required": true,
+        "purpose": "Ask ChatGPT each exact question, logged-out, with web search off for the counted answers and on for the source pass."
+      },
+      {
+        "tool_id": "serper.google-search",
+        "required": false,
+        "purpose": "Find the business's own page that should answer a buyer question when it isn't linked from the home page."
+      },
+      {
+        "tool_id": "brightdata.web-scrape",
+        "required": true,
+        "purpose": "Open the business's pages and the pages ChatGPT cites before building a fix on them."
+      },
+      {
+        "tool_id": "firecrawl.web-scrape",
+        "required": false,
+        "purpose": "Re-read a page once when the first read comes back empty or as navigation only."
+      },
+      {
+        "tool_id": "cloro.gemini-search",
+        "required": true,
+        "purpose": "Observe repeated Gemini web answers and available citations for the exact approved prompts and country."
+      },
+      {
+        "tool_id": "cloro.google-ai-mode",
+        "required": true,
+        "purpose": "Observe repeated Google AI Mode web answers and available citations for the exact approved prompts, country and interface language."
+      }
+    ],
+    "connected_apps": []
+  },
+  "inputs": [
+    "Website and target market (country and language)",
+    "Five approved natural buyer questions, brand aliases/domains and up to three rivals",
+    "Approved budget; optional previous checkpoint and list of changes since the baseline"
+  ],
+  "outputs": [
+    "Separate engine scorecards with exact mention, recommendation and citation counts and failed/missing coverage",
+    "Checked citation opportunities and up to three prioritized page fixes or outreach drafts",
+    "By-name accuracy check and a dated, like-for-like recheck plan",
+    "Private portable HTML report, CSV observations and JSON checkpoint with run receipts"
+  ],
+  "cost": {
+    "currency": "USD",
+    "model": "45 buyer answers, nine by-name answers, five ChatGPT source-pass answers; up to 12 page reads, four fallback reads and two searches. Optional enrichment is separately quoted.",
+    "trial_safe_max_usd": "0.500000",
+    "notes": "Inspect actual current prices before approving. Expected core cost about $0.30, excluding the host agent model; reserve at most $0.50 for the bounded plan. Missing tools or an unaffordable plan stop before paid work. A plan with fewer engines is explicitly labelled, never silently substituted."
+  },
+  "approvals": [
+    "Confirm questions, market, engines, sample plan and maximum before paid work; reuse explicit authorization for that exact plan",
+    "Recover existing run IDs before retrying; changes to scope, cost ceiling, engine or sampling plan require agreement",
+    "Optional enrichment requires its own inspected estimate within an approved budget",
+    "No outreach, website edits, publishing or recurring rechecks without separate authorization"
+  ],
+  "compatibility": [
+    "Agent Skills compatible host with an authorized Scrollport connection",
+    "Local private checkpoint files; Python 3 standard library for the optional deterministic HTML/CSV renderer",
+    "A Markdown report is available when the host cannot run local scripts"
+  ],
+  "evidence": {
+    "verified_at": null,
+    "review_due_at": null,
+    "summary_path": null
+  },
+  "changelog_path": "CHANGELOG.md"
+}
