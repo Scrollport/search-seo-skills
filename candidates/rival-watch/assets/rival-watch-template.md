@@ -80,8 +80,9 @@ Total $[spent] of the approved $[maximum].
 ### Limits
 
 Public sources only. Rankings are one Google sample per keyword, top 10 only.
-Prices can differ by visitor country. Page lists leave out pages users create,
-and a list built a different way from last week's isn't compared. DataForSEO's
+Prices can differ by visitor country. Page lists come only from a complete
+sitemap, leave out pages users create, and are compared only with last week's
+list from the same sitemap; a rival without one says why. DataForSEO's
 counts change only when it refreshes its data. Ads cover Meta only, newest 30
 per rival ("at least 30" when the page is full). Anything marked "not checked"
 was not assessed.
