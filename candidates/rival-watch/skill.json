@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "rival-watch",
   "title": "Rival Watch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "status": "draft",
   "customer_proven": false,
   "summary": "Each week, read your top rivals' pricing, key pages, page list, Meta ads, news and Google rankings, compare them with last week's snapshot, and report only the changes that matter, with before and after quotes and links.",
@@ -15,12 +15,6 @@
       "id": "web-page-extraction",
       "tool_ids": [
         "firecrawl.web-scrape"
-      ]
-    },
-    {
-      "id": "website-mapping",
-      "tool_ids": [
-        "firecrawl.site-map"
       ]
     },
     {
@@ -64,12 +58,7 @@
       {
         "tool_id": "firecrawl.web-scrape",
         "required": true,
-        "purpose": "Read each rival's pricing, home and changelog pages and its sitemap."
-      },
-      {
-        "tool_id": "firecrawl.site-map",
-        "required": false,
-        "purpose": "List a rival's pages when its sitemap is missing, cut off at the read limit or not XML."
+        "purpose": "Read each rival's pricing, home and changelog pages and its sitemap (the only source of a page list; a sitemap that is cut off, missing or not XML means no page list that week)."
       },
       {
         "tool_id": "brightdata.web-scrape",
