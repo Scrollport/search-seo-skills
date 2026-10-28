@@ -140,7 +140,15 @@ test("Rival Watch stays a private draft candidate until a verification run promo
 test("Rival Watch reports only what its tools return: top 10 positions and whole sitemaps", () => {
   const draft = readFileSync(join(root, "candidates", "rival-watch", "DRAFT.md"), "utf8");
   assert(!/top 20|num 20/.test(draft), "searches return the top 10 only");
-  assert(draft.includes("100,000 characters"), "a cut-off sitemap must fall back to the site-map tool");
+  assert(draft.includes("100,000 characters"), "a cut-off sitemap means no page list that week");
+});
+
+test("Rival Watch keeps the fixes from its verification runs", () => {
+  const draft = readFileSync(join(root, "candidates", "rival-watch", "DRAFT.md"), "utf8").replace(/\s+/g, " ");
+  assert(draft.includes("page list not compared") && !draft.includes("firecrawl.site-map"), "page lists come only from a complete sitemap, never a page-mapping sample");
+  assert(draft.includes("/robots.txt names"), "the sitemap is the one robots.txt names");
+  assert(draft.includes("at least four in five of last week's paths") && draft.includes("page list reorganised, not compared"), "a reorganised sitemap is not compared");
+  assert(draft.includes("testing headlines") && draft.includes("every price or headline change was confirmed by a second read"), "headline changes need a second read and alternating versions are a test");
 });
 
 test("AI visibility retains its id, separates engines and distinguishes repeats from recovery", () => {

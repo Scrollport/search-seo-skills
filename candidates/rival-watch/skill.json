@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "rival-watch",
   "title": "Rival Watch",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "status": "draft",
   "customer_proven": false,
   "summary": "Each week, read your top rivals' pricing, key pages, page list, Meta ads, news and Google rankings, compare them with last week's snapshot, and report only the changes that matter, with before and after quotes and links.",
@@ -58,12 +58,12 @@
       {
         "tool_id": "firecrawl.web-scrape",
         "required": true,
-        "purpose": "Read each rival's pricing, home and changelog pages and its sitemap (the only source of a page list; a sitemap that is cut off, missing or not XML means no page list that week)."
+        "purpose": "Read each rival's pricing, home and changelog pages, its robots.txt on the first run and the sitemap it names (the only source of a page list; a sitemap that is cut off, missing, not XML or reorganised means no page-list comparison that week)."
       },
       {
         "tool_id": "brightdata.web-scrape",
         "required": false,
-        "purpose": "Confirm a price change with a second read, or recover a page the first read missed."
+        "purpose": "Confirm a price or headline change with a second read, or recover a page the first read missed."
       },
       {
         "tool_id": "serper.google-search",
@@ -105,7 +105,7 @@
     "currency": "USD",
     "model": "Per-call page reads and Google searches, plus one Meta ads lookup and one domain overview per rival, each week.",
     "trial_safe_max_usd": "0.160000",
-    "notes": "Re-inspect each week. At 14 October 2026 prices a typical week costs about $0.11 for 3 rivals and 10 keywords and about $0.07 for 2 rivals and 5 keywords. The maximum for 3 rivals and 10 keywords, including price confirmations and fallbacks, is $0.151900 in the first week (one extra home-links read per rival) and $0.144400 after that."
+    "notes": "Re-inspect each week. At 14 October 2026 prices a typical week costs about $0.11 for 3 rivals and 10 keywords and about $0.07 for 2 rivals and 5 keywords. The maximum for 3 rivals and 10 keywords, including price and headline confirmations and fallbacks, is $0.159400 in the first week (one extra home-links read and one robots.txt read per rival) and $0.144400 after that."
   },
   "approvals": [
     "Approve the rivals, money keywords, country and weekly maximum before the first paid call",
