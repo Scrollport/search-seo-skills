@@ -60,8 +60,8 @@ compare.
 | --- | --- | --- |
 | Pricing, home and changelog pages | `firecrawl.web-scrape` | url, formats ["markdown"], onlyMainContent true |
 | Home page links, to find the pricing and changelog pages (first run, or when a saved address stops working) | `firecrawl.web-scrape` | home url, formats ["links"], onlyMainContent false |
-| Sitemap: the page list with lastmod dates | `firecrawl.web-scrape` | sitemap url, formats ["rawHtml"], onlyMainContent false |
-| Second read: confirm a price change or recover a failed page | `brightdata.web-scrape` | url, format "markdown" |
+| robots.txt (first run), then the sitemap it names: the page list with lastmod dates | `firecrawl.web-scrape` | sitemap url, formats ["rawHtml"], onlyMainContent false |
+| Second read: confirm a price or headline change, or recover a failed page | `brightdata.web-scrape` | url, format "markdown" |
 | News from the last week | `serper.google-search` | query [rival name plus a product word; quote the name only when it has no dot], type "news", num 10, gl, hl |
 | Live ranking check (top 10), one search per money keyword | `serper.google-search` | query [keyword], type "search", num 10, gl, hl |
 | Second search route when a ranking search fails | `scrapecreators.v1-google-search` | query, region, page 1 |
@@ -81,13 +81,15 @@ a tool's worked-example estimate when it is higher than its listed price.
 
 - Per rival: up to 5 page reads (pricing, home, changelog, sitemap, and a
   child sitemap when the sitemap is an index), 1 news search, 1 ads lookup and
-  1 domain overview. In the first week, add 1 home-links read per rival.
+  1 domain overview. In the first week, add 1 home-links read and 1
+  robots.txt read per rival.
 - Per money keyword: 1 search.
-- Recovery: up to 3 second reads and 2 second-route searches.
+- Recovery: up to 3 second reads (to confirm a price or headline change, or
+  to recover a failed page) and 2 second-route searches.
 
 At 14 October 2026 prices ($0.002500 a page read or search, $0.002700 an ads
 lookup or second-route search, $0.003300 a second read, $0.017000 a domain
-overview), 3 rivals and 10 keywords cost at most $0.151900 in the first week
+overview), 3 rivals and 10 keywords cost at most $0.159400 in the first week
 and $0.144400 after that. A typical week, with three page reads per rival, is
 about $0.11; 2 rivals and 5 keywords is about $0.07. If a maximum ever exceeds
 $0.160000, stop and ask.
@@ -103,18 +105,23 @@ and estimate, and wait.
 
 Run calls one after another. For each rival:
 
-1. **Home page**: the hero headline and subheadline. A main-content read
-   leaves out the navigation, so on the first run, or when a saved address
-   stops working, read the home page's links separately to find the pricing
-   and changelog pages, and save their URLs.
+1. **Home page**: the hero headline and subheadline. Keep every version you
+   have seen in the snapshot: some rivals test several headlines at once. A
+   main-content read leaves out the navigation, so on the first run, or when
+   a saved address stops working, read the home page's links separately to
+   find the pricing and changelog pages, and save their URLs.
 2. **Pricing page**: each plan's name, price, currency and billing period, any
    free plan or trial, and up to three headline limits. Note which billing view
    the page showed (monthly or annual).
 3. **Changelog**, if the rival has one: the five newest entries with dates.
-4. **Page list**: read /sitemap.xml on the rival's domain. If it is a sitemap
-   index, read the one child sitemap that lists product and marketing pages
-   rather than blog posts. Keep every path with its lastmod date, but drop
-   pages that users create rather than the company, such as boards, cards,
+4. **Page list**: use the sitemap that the rival's /robots.txt names on its
+   `Sitemap:` line, or /sitemap.xml when it names none. Look it up on the
+   first run, save its URL and read that URL every week; check robots.txt
+   again only when the saved sitemap stops loading. If it is a sitemap index,
+   read the one child sitemap that lists product and marketing pages rather
+   than blog posts, and save that child's URL. Keep every path with its
+   lastmod date, but drop pages that users create rather than the company,
+   such as boards, cards,
    member and profile pages, community posts and forum threads (Trello's /b/,
    /c/, /1/cards/ and /1/Members/ paths, for example). Record the sitemap URL
    the list came from. A read stops at 100,000 characters: if the sitemap was
@@ -181,9 +188,22 @@ pages. Ignore case, punctuation, spacing and emoji when comparing text.
    pricing, plans, enterprise, integrations, solutions, use-cases, customers,
    partners or security; a new country or language folder; any page that names
    the user; or 5 or more new pages in one section in a week, reported once.
-   Compare page lists only when both weeks read the same complete sitemap.
+   Compare page lists only when both weeks read the same complete sitemap
+   and this week's list still holds at least four in five of last week's
+   paths. If more than a fifth are missing, the rival reorganised its sitemap
+   rather than removing pages (28 October 2026 test: monday.com moved 341 of
+   its 464 paths into other sitemaps, and the "removed" pages still loaded).
+   Report nothing from it, say "page list reorganised, not compared" in
+   Details, and save this week's list as the new baseline.
 3. **Positioning**: the hero headline or subheadline now makes a different
    claim, or names a different audience, category or offer, or the user.
+   Confirm it with a second read, within the recovery allowance, before
+   reporting. If the second read shows another version, or the new headline
+   is one recorded in an earlier week, the rival is testing headlines: list
+   it in Details as a headline test with each version and when it was seen,
+   not as a change (28 October 2026 test: asana.com served two headlines on
+   back-to-back requests). If no second read is left, list it in Details as
+   unconfirmed and check again next week.
 4. **Launch or event**: a changelog entry or news item about a new product,
    plan, major feature or integration, a price change, funding, an acquisition,
    a partnership, a leadership change, an outage or a security incident.
@@ -197,7 +217,8 @@ pages. Ignore case, punctuation, spacing and emoji when comparing text.
    the last snapshot.
 
 **Noise, so hide it** and count it in Details: wording polish that keeps the
-same claim, reordered sections, cookie banners, rotating logos or
+same claim, headlines that alternate between versions already seen,
+reordered sections, cookie banners, rotating logos or
 testimonials, counters such as customers, reviews or ratings, dates and
 copyright years, image swaps, blog posts that don't touch the user or the money
 keywords, re-uploads of the same ad, analyst reports and stock price moves that
@@ -247,7 +268,9 @@ credentials, tokens or approval links.
                "changelog": null, "sitemap": "https://acme.com/sitemap.xml"},
       "plans": [{"name": "Pro", "price": "39", "currency": "USD", "period": "month",
                  "view": "monthly", "limits": ["5 users"], "quote": "Pro $39/mo"}],
-      "hero": {"headline": "...", "subheadline": "..."},
+      "hero": {"headline": "...", "subheadline": "...",
+               "versions_seen": [{"headline": "...", "subheadline": "...",
+                                 "dates": ["2026-10-14"]}]},
       "changelog": [{"date": "2026-10-10", "title": "..."}],
       "page_list_source": "https://acme.com/sitemap.xml",
       "pages": [{"path": "/vs/yourbrand", "lastmod": "2026-10-11"}],
@@ -306,7 +329,7 @@ After the first run, offer to repeat it weekly on the same day.
   sitemap or a plain note saying why the list wasn't read or compared.
 - Every reported change meets the materiality rule and has before and after
   quotes (on the first run, a dated source), a link and a capture date, and
-  every price change was confirmed by a second read.
+  every price or headline change was confirmed by a second read.
 - The first screen shows at most 5 changes, the biggest ranking move, the quiet
   rivals and the week's spend, and says "nothing material changed" plainly when
   that is true.

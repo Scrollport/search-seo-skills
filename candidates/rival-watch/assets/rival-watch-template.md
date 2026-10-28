@@ -82,7 +82,10 @@ Total $[spent] of the approved $[maximum].
 Public sources only. Rankings are one Google sample per keyword, top 10 only.
 Prices can differ by visitor country. Page lists come only from a complete
 sitemap, leave out pages users create, and are compared only with last week's
-list from the same sitemap; a rival without one says why. DataForSEO's
+list from the same sitemap; a list that lost more than a fifth of last
+week's pages counts as reorganised and isn't compared, and a rival without a
+list says why. A headline that alternates between versions is a test, not a
+change. DataForSEO's
 counts change only when it refreshes its data. Ads cover Meta only, newest 30
 per rival ("at least 30" when the page is full). Anything marked "not checked"
 was not assessed.
