@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.0.2 — 2026-11-09
+
+Wording only. Adds a link to the Skill's page on scrollport.com (an example result, prices and setup), so readers on ClawHub and other mirrors can find it. The workflow, tools, prices and verification are unchanged.
+
 ## 4.0.1 — 2026-10-20
 
 - Reject undeclared checkpoint fields and nested metadata before writing portable reports.

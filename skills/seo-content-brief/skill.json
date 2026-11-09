@@ -3,7 +3,7 @@
   "schema_version": 2,
   "id": "seo-content-brief",
   "title": "Article Brief + Draft",
-  "version": "4.1.2",
+  "version": "4.1.3",
   "status": "verified",
   "customer_proven": false,
   "summary": "It finds the phrases people really search, reads today's Google results, one ChatGPT answer and 10 sources, then gives you a cited brief and a first draft to edit.",

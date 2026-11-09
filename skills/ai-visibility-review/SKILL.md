@@ -10,6 +10,8 @@ Deliver an evidence-backed answer to “Do AI answers recommend us, why might
 they recommend others, and what should we try next?” Lead with each engine's
 counts, the strongest checked opportunity and three practical actions.
 
+[AI Visibility and Citation Plan on Scrollport](https://scrollport.com/skills/ai-visibility-review): an example result, prices and setup.
+
 ## Start with a bounded plan
 
 1. Get the website, country and language. Use existing context before asking.

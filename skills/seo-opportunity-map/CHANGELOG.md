@@ -7,7 +7,7 @@ shortlisted phrases, export queries among them, go through Scrollport to
 DataForSEO and Serper, and page addresses to Bright Data; export rows and
 metrics never do, and private queries are left out. The approval message names
 the providers. ClawHub's security audit flagged the missing notice. The workflow,
-tools, prices and the 14 October verification are unchanged.
+tools, prices and the 14 October verification are unchanged. Adds a link to the Skill's page on scrollport.com (an example result, prices and setup), so readers on ClawHub and other mirrors can find it.
 
 ## 5.1.2 — 2026-10-18
 

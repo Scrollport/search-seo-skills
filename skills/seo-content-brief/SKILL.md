@@ -11,6 +11,8 @@ metadata:
 **Promise:** Pick a winnable angle for one topic, then get a cited brief and a
 first draft to edit.
 
+[Article Brief + Draft on Scrollport](https://scrollport.com/skills/seo-content-brief): an example result, prices and setup.
+
 Your reader is a founder or a small team who will edit and publish the article
 themselves. Lead with the angle and the plan; keep run ids, per-call costs and
 limits in a Details appendix at the end. Everything you write is a draft for a

@@ -11,6 +11,8 @@ metadata:
 **Promise:** Your next five SEO moves: which page to fix or write, the exact
 edit, and why.
 
+[Next SEO Moves on Scrollport](https://scrollport.com/skills/seo-opportunity-map): an example result, prices and setup.
+
 Your reader is a founder or a small team who will do the work themselves. Give
 them a numbered to-do list they can start today. Lead with the answer; keep the
 method, run ids, per-call costs and limits in a short Details appendix at the
