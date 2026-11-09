@@ -11,6 +11,8 @@ metadata:
 **Promise:** Your next five SEO moves: which page to fix or write, the exact
 edit, and why.
 
+[Next SEO Moves on Scrollport](https://scrollport.com/skills/seo-opportunity-map): an example result, prices and setup.
+
 Your reader is a founder or a small team who will do the work themselves. Give
 them a numbered to-do list they can start today. Lead with the answer; keep the
 method, run ids, per-call costs and limits in a short Details appendix at the
@@ -84,8 +86,13 @@ defaults, only for what is missing:
 
 Without an export, say: "Evidence will be Medium. A Search Console export makes
 it Strong: your real positions and impressions turn more moves into quick
-updates." Then continue. Use exports only for this report and do not copy their
-rows anywhere else.
+updates." Then continue. Use exports only for this report and never copy their
+rows anywhere else. Only what the tools need leaves the conversation: the site,
+the rivals, up to 20 shortlisted phrases (export queries among them) and the
+addresses of the pages to read, sent through Scrollport to DataForSEO, Serper and
+Bright Data (Firecrawl as backup). Clicks, impressions, page metrics and whole
+rows are never sent. Leave out any query that names a person or contains an
+email address, an account or order number or another private detail.
 
 ## 3. Tools
 
@@ -141,8 +148,10 @@ run, and treat the server's estimate as final if it differs:
 With rivals named by the user, the maximum is $0.255000.
 
 Before the first paid call, send one short message: site, market, rivals (or
-"found automatically"), what you will check, the maximum ("up to $0.28") and
-the time (about 10–15 minutes). Wait for a yes. An earlier approval counts only
+"found automatically"), what you will check, what goes where ("the site, rivals
+and up to 20 phrases, including any from your export, go through Scrollport to
+DataForSEO and Serper; page addresses go to Bright Data"), the maximum ("up to
+$0.28") and the time (about 10–15 minutes). Wait for a yes. An earlier approval counts only
 if it covers this site, market and maximum. Ask again before anything bigger:
 more rivals, rows, pages or markets, or a maximum above $0.30. If a run needs
 confirmation or returns an approval link, show the revised total and the link
