@@ -1,5 +1,14 @@
 # Changelog
 
+## 5.1.3 — 2026-11-09
+
+Wording only: the Skill now says what leaves the conversation. Up to 20
+shortlisted phrases, export queries among them, go through Scrollport to
+DataForSEO and Serper, and page addresses to Bright Data; export rows and
+metrics never do, and private queries are left out. The approval message names
+the providers. ClawHub's security audit flagged the missing notice. The workflow,
+tools, prices and the 14 October verification are unchanged.
+
 ## 5.1.2 — 2026-10-18
 
 Wording only: the summary no longer names an audience. It starts "It checks
